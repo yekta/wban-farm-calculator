@@ -200,7 +200,8 @@
 			<div class="w-full flex flex-col">
 				<p class="font-bold text-xl px-2">Step 1</p>
 				<p class="text-c-on-bg-75 px-2 mt-1">
-					Change the wBAN rewards given each second by the farm by running the command below:
+					Change the wBAN rewards given every second by the farm manager contract by running the
+					command below:
 				</p>
 				<p
 					class="bg-c-primary-10 border border-c-primary-20 rounded-lg pl-4 pr-12 py-3 mt-4 text-sm font-medium text-c-primary break-all font-mono relative overflow-hidden"
@@ -261,7 +262,7 @@
 			<div class="w-full flex flex-col mt-8">
 				<p class="font-bold text-xl px-2">Step 2</p>
 				<p class="text-c-on-bg-75 px-2 mt-1">
-					Extend the time that the farm would run for by running the command below:
+					Extend the time that the farm manager contract would run for by running the command below:
 				</p>
 				<p
 					class="bg-c-primary-10 border border-c-primary-20 rounded-lg pl-4 pr-12 py-3 mt-4 text-sm font-medium text-c-primary break-all font-mono relative overflow-hidden"
