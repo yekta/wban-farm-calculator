@@ -6,12 +6,18 @@
 		ListboxOptions,
 		Transition
 	} from '@rgossiaux/svelte-headlessui';
+	import { copy } from 'svelte-copy';
 
 	const dayInSeconds = 60 * 60 * 24;
 	const maxDecimalPoints = 9;
 	let selectedFarmIndex = 0;
 	let amountToDistribute: number;
 	let timeInDays: number;
+	let stepOneCopied = false;
+	let stepTwoCopied = false;
+	let stepOneTimeout;
+	let stepTwoTimeout;
+	const copyDelay = 1000;
 
 	interface Farm {
 		chain: ChainOptions;
@@ -199,7 +205,7 @@
 		leaveTo="scale-y-75 opacity-0 -translate-y-2"
 		class="max-w-full"
 	>
-		<div class="bg-c-on-bg-05 w-[70rem] max-w-full rounded-xl p-6 container mt-8">
+		<div class="bg-c-on-bg-05 w-[72rem] max-w-full rounded-xl p-6 container mt-8">
 			<!-- Step 1 -->
 			<div class="w-full flex flex-col">
 				<p class="font-bold text-xl px-2">Step 1</p>
@@ -207,13 +213,58 @@
 					Change the wBAN rewards given each second by the farm by running the command below:
 				</p>
 				<p
-					class="bg-c-primary-10 border border-c-primary-20 rounded-lg px-4 py-3 mt-4 text-sm font-medium text-c-primary break-all font-mono"
+					class="bg-c-primary-10 border border-c-primary-20 rounded-lg pl-4 pr-12 py-3 mt-4 text-sm font-medium text-c-primary break-all font-mono relative overflow-hidden"
 				>
 					{getStepOneCommand(
 						ChainOptions[farms[selectedFarmIndex].chain].toLowerCase(),
 						farms[selectedFarmIndex].address,
 						floorTo(amountToDistribute / (timeInDays * dayInSeconds), maxDecimalPoints)
 					)}
+					<button
+						on:click={() => {
+							stepOneCopied = true;
+							if (stepOneTimeout) clearTimeout(stepOneTimeout);
+							stepOneTimeout = setTimeout(() => {
+								stepOneCopied = false;
+							}, copyDelay);
+						}}
+						use:copy={getStepOneCommand(
+							ChainOptions[farms[selectedFarmIndex].chain].toLowerCase(),
+							farms[selectedFarmIndex].address,
+							floorTo(amountToDistribute / (timeInDays * dayInSeconds), maxDecimalPoints)
+						)}
+						class="h-full absolute right-0 top-0 flex flex-row items-center justify-center hover:bg-c-primary-10 px-3 transition"
+					>
+						{#if stepOneCopied}
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								class="h-6 w-6"
+								viewBox="0 0 20 20"
+								fill="currentColor"
+							>
+								<path
+									fill-rule="evenodd"
+									d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+									clip-rule="evenodd"
+								/>
+							</svg>
+						{:else}
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								class="h-6 w-6"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke="currentColor"
+								stroke-width="2"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+								/>
+							</svg>
+						{/if}
+					</button>
 				</p>
 			</div>
 			<!-- Step 2 -->
@@ -223,13 +274,58 @@
 					Extend the time that the farm would run for by running the command below:
 				</p>
 				<p
-					class="bg-c-primary-10 border border-c-primary-20 rounded-lg px-4 py-3 mt-4 text-sm font-medium text-c-primary break-all font-mono"
+					class="bg-c-primary-10 border border-c-primary-20 rounded-lg pl-4 pr-12 py-3 mt-4 text-sm font-medium text-c-primary break-all font-mono relative overflow-hidden"
 				>
 					{getStepTwoCommand(
 						ChainOptions[farms[selectedFarmIndex].chain].toLowerCase(),
 						farms[selectedFarmIndex].address,
 						timeInDays * dayInSeconds
 					)}
+					<button
+						on:click={() => {
+							stepTwoCopied = true;
+							if (stepTwoTimeout) clearTimeout(stepTwoTimeout);
+							setTimeout(() => {
+								stepTwoCopied = false;
+							}, copyDelay);
+						}}
+						use:copy={getStepTwoCommand(
+							ChainOptions[farms[selectedFarmIndex].chain].toLowerCase(),
+							farms[selectedFarmIndex].address,
+							timeInDays * dayInSeconds
+						)}
+						class="h-full absolute right-0 top-0 flex flex-row items-center justify-center hover:bg-c-primary-10 px-3 transition"
+					>
+						{#if stepTwoCopied}
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								class="h-6 w-6"
+								viewBox="0 0 20 20"
+								fill="currentColor"
+							>
+								<path
+									fill-rule="evenodd"
+									d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+									clip-rule="evenodd"
+								/>
+							</svg>
+						{:else}
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								class="h-6 w-6"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke="currentColor"
+								stroke-width="2"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+								/>
+							</svg>
+						{/if}
+					</button>
 				</p>
 			</div>
 		</div>
