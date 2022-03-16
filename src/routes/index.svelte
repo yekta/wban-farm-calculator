@@ -19,10 +19,9 @@
 	let stepTwoTimeout;
 	const copyDelay = 1000;
 
-	interface Farm {
+	interface FarmManager {
 		chain: ChainOptions;
 		address: string;
-		pair: string;
 	}
 	enum ChainOptions {
 		Polygon,
@@ -30,21 +29,18 @@
 		Fantom
 	}
 
-	const farms: Farm[] = [
+	const farmManagers: FarmManager[] = [
 		{
 			chain: ChainOptions.Fantom,
-			address: '0x1406E49b5B0dA255307FE25cC21C675D4Ffc73e0',
-			pair: 'wBAN-wFTM'
-		},
-		{
-			chain: ChainOptions.Fantom,
-			address: '0x6bADcf8184a760326528b11057C00952811f77af',
-			pair: 'wBAN-USDC'
+			address: '0xd91f84d4e2d9f4fa508c61356a6cb81a306e5287'
 		},
 		{
 			chain: ChainOptions.Polygon,
-			address: '0xefa4aED9Cf41A8A0FcdA4e88EfA2F60675bAeC9F',
-			pair: 'wBAN-wETH'
+			address: '0xefa4aED9Cf41A8A0FcdA4e88EfA2F60675bAeC9F'
+		},
+		{
+			chain: ChainOptions.BSC,
+			address: '0x1E30E12e82956540bf870A40FD1215fC083a3751'
 		}
 	];
 
@@ -108,10 +104,7 @@
 						: 'shadow-dropdown'}"
 				>
 					<p class="mr-1 max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap">
-						{farms[selectedFarmIndex].pair}
-						<span class="opacity-50 font-normal"
-							>({ChainOptions[farms[selectedFarmIndex].chain]})</span
-						>
+						{ChainOptions[farmManagers[selectedFarmIndex].chain]}
 					</p>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -142,7 +135,7 @@
 							class="w-full shadow-dropdown-hover bg-c-bg absolute top-0 right-0 rounded-lg rounded-t-none border border-t-0 
 							border-c-on-bg-10 overflow-hidden flex flex-col items-stretch"
 						>
-							{#each farms as farm, index}
+							{#each farmManagers as farm, index}
 								{#if index != selectedFarmIndex}
 									<ListboxOption
 										as="button"
@@ -150,10 +143,7 @@
 										value={index}
 									>
 										<p class="w-full overflow-hidden overflow-ellipsis whitespace-nowrap text-left">
-											{farm.pair}
-											<span class="opacity-50 font-normal"
-												>({ChainOptions[farms[index].chain]})</span
-											>
+											{ChainOptions[farmManagers[index].chain]}
 										</p>
 									</ListboxOption>
 								{/if}
@@ -216,8 +206,8 @@
 					class="bg-c-primary-10 border border-c-primary-20 rounded-lg pl-4 pr-12 py-3 mt-4 text-sm font-medium text-c-primary break-all font-mono relative overflow-hidden"
 				>
 					{getStepOneCommand(
-						ChainOptions[farms[selectedFarmIndex].chain].toLowerCase(),
-						farms[selectedFarmIndex].address,
+						ChainOptions[farmManagers[selectedFarmIndex].chain].toLowerCase(),
+						farmManagers[selectedFarmIndex].address,
 						floorTo(amountToDistribute / (timeInDays * dayInSeconds), maxDecimalPoints)
 					)}
 					<button
@@ -229,8 +219,8 @@
 							}, copyDelay);
 						}}
 						use:copy={getStepOneCommand(
-							ChainOptions[farms[selectedFarmIndex].chain].toLowerCase(),
-							farms[selectedFarmIndex].address,
+							ChainOptions[farmManagers[selectedFarmIndex].chain].toLowerCase(),
+							farmManagers[selectedFarmIndex].address,
 							floorTo(amountToDistribute / (timeInDays * dayInSeconds), maxDecimalPoints)
 						)}
 						class="h-full absolute right-0 top-0 flex flex-row items-center justify-center hover:bg-c-primary-10 px-3 transition"
@@ -277,8 +267,8 @@
 					class="bg-c-primary-10 border border-c-primary-20 rounded-lg pl-4 pr-12 py-3 mt-4 text-sm font-medium text-c-primary break-all font-mono relative overflow-hidden"
 				>
 					{getStepTwoCommand(
-						ChainOptions[farms[selectedFarmIndex].chain].toLowerCase(),
-						farms[selectedFarmIndex].address,
+						ChainOptions[farmManagers[selectedFarmIndex].chain].toLowerCase(),
+						farmManagers[selectedFarmIndex].address,
 						timeInDays * dayInSeconds
 					)}
 					<button
@@ -290,8 +280,8 @@
 							}, copyDelay);
 						}}
 						use:copy={getStepTwoCommand(
-							ChainOptions[farms[selectedFarmIndex].chain].toLowerCase(),
-							farms[selectedFarmIndex].address,
+							ChainOptions[farmManagers[selectedFarmIndex].chain].toLowerCase(),
+							farmManagers[selectedFarmIndex].address,
 							timeInDays * dayInSeconds
 						)}
 						class="h-full absolute right-0 top-0 flex flex-row items-center justify-center hover:bg-c-primary-10 px-3 transition"
