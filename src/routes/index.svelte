@@ -50,10 +50,10 @@
 	}
 
 	function getStepOneCommand(chain: string, address: string, banASecond: number) {
-		return `npx hardhat --chain ${chain} benis:change-rewards --benis ${address} --rewards ${banASecond}`;
+		return `npx hardhat --network ${chain} benis:change-rewards --benis ${address} --rewards ${banASecond}`;
 	}
 	function getStepTwoCommand(chain: string, address: string, timeInSeconds: number) {
-		return `npx hardhat --chain ${chain} benis:add-time --benis ${address} --time ${timeInSeconds}`;
+		return `npx hardhat --network ${chain} benis:add-time --benis ${address} --time ${timeInSeconds}`;
 	}
 	// adjust decimal points to a certain number
 	function floorTo(value: number, precision: number) {
