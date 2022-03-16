@@ -20,10 +20,10 @@
 	const copyDelay = 1000;
 
 	interface FarmManager {
-		chain: ChainOptions;
+		network: NetworkOptions;
 		address: string;
 	}
-	enum ChainOptions {
+	enum NetworkOptions {
 		Polygon,
 		BSC,
 		Fantom
@@ -31,15 +31,15 @@
 
 	const farmManagers: FarmManager[] = [
 		{
-			chain: ChainOptions.Fantom,
+			network: NetworkOptions.Fantom,
 			address: '0xd91f84d4e2d9f4fa508c61356a6cb81a306e5287'
 		},
 		{
-			chain: ChainOptions.Polygon,
+			network: NetworkOptions.Polygon,
 			address: '0xefa4aED9Cf41A8A0FcdA4e88EfA2F60675bAeC9F'
 		},
 		{
-			chain: ChainOptions.BSC,
+			network: NetworkOptions.BSC,
 			address: '0x1E30E12e82956540bf870A40FD1215fC083a3751'
 		}
 	];
@@ -49,11 +49,11 @@
 		console.log(selectedFarmIndex);
 	}
 
-	function getStepOneCommand(chain: string, address: string, banASecond: number) {
-		return `npx hardhat --network ${chain} benis:change-rewards --benis ${address} --rewards ${banASecond}`;
+	function getStepOneCommand(network: string, address: string, banASecond: number) {
+		return `npx hardhat --network ${network} benis:change-rewards --benis ${address} --rewards ${banASecond}`;
 	}
-	function getStepTwoCommand(chain: string, address: string, timeInSeconds: number) {
-		return `npx hardhat --network ${chain} benis:add-time --benis ${address} --time ${timeInSeconds}`;
+	function getStepTwoCommand(network: string, address: string, timeInSeconds: number) {
+		return `npx hardhat --network ${network} benis:add-time --benis ${address} --time ${timeInSeconds}`;
 	}
 	// adjust decimal points to a certain number
 	function floorTo(value: number, precision: number) {
@@ -89,7 +89,7 @@
 		on:submit|preventDefault
 	>
 		<div class="w-full flex flex-col">
-			<p class="px-2 text-c-on-bg-75 font-medium">Farm</p>
+			<p class="px-2 text-c-on-bg-75 font-medium">Network</p>
 			<Listbox
 				class="w-full relative text-c-on-bg-75 flex flex-col items-stretch mt-2"
 				value={selectedFarmIndex}
@@ -104,7 +104,7 @@
 						: 'shadow-dropdown'}"
 				>
 					<p class="mr-1 max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap">
-						{ChainOptions[farmManagers[selectedFarmIndex].chain]}
+						{NetworkOptions[farmManagers[selectedFarmIndex].network]}
 					</p>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -143,7 +143,7 @@
 										value={index}
 									>
 										<p class="w-full overflow-hidden overflow-ellipsis whitespace-nowrap text-left">
-											{ChainOptions[farmManagers[index].chain]}
+											{NetworkOptions[farmManagers[index].network]}
 										</p>
 									</ListboxOption>
 								{/if}
@@ -207,7 +207,7 @@
 					class="bg-c-primary-10 border border-c-primary-20 rounded-lg pl-4 pr-12 py-3 mt-4 text-sm font-medium text-c-primary break-all font-mono relative overflow-hidden"
 				>
 					{getStepOneCommand(
-						ChainOptions[farmManagers[selectedFarmIndex].chain].toLowerCase(),
+						NetworkOptions[farmManagers[selectedFarmIndex].network].toLowerCase(),
 						farmManagers[selectedFarmIndex].address,
 						floorTo(amountToDistribute / (timeInDays * dayInSeconds), maxDecimalPoints)
 					)}
@@ -220,7 +220,7 @@
 							}, copyDelay);
 						}}
 						use:copy={getStepOneCommand(
-							ChainOptions[farmManagers[selectedFarmIndex].chain].toLowerCase(),
+							NetworkOptions[farmManagers[selectedFarmIndex].network].toLowerCase(),
 							farmManagers[selectedFarmIndex].address,
 							floorTo(amountToDistribute / (timeInDays * dayInSeconds), maxDecimalPoints)
 						)}
@@ -268,7 +268,7 @@
 					class="bg-c-primary-10 border border-c-primary-20 rounded-lg pl-4 pr-12 py-3 mt-4 text-sm font-medium text-c-primary break-all font-mono relative overflow-hidden"
 				>
 					{getStepTwoCommand(
-						ChainOptions[farmManagers[selectedFarmIndex].chain].toLowerCase(),
+						NetworkOptions[farmManagers[selectedFarmIndex].network].toLowerCase(),
 						farmManagers[selectedFarmIndex].address,
 						timeInDays * dayInSeconds
 					)}
@@ -281,7 +281,7 @@
 							}, copyDelay);
 						}}
 						use:copy={getStepTwoCommand(
-							ChainOptions[farmManagers[selectedFarmIndex].chain].toLowerCase(),
+							NetworkOptions[farmManagers[selectedFarmIndex].network].toLowerCase(),
 							farmManagers[selectedFarmIndex].address,
 							timeInDays * dayInSeconds
 						)}
