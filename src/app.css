@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+
+:root {
+	--c-primary: rgba(122, 183, 255, 1);
+	--c-primary-75: rgba(122, 183, 255, 0.75);
+	--c-primary-50: rgba(122, 183, 255, 0.5);
+	--c-primary-35: rgba(122, 183, 255, 0.35);
+	--c-primary-25: rgba(122, 183, 255, 0.25);
+	--c-primary-20: rgba(122, 183, 255, 0.2);
+	--c-primary-15: rgba(122, 183, 255, 0.15);
+	--c-primary-10: rgba(122, 183, 255, 0.1);
+	--c-primary-hover: rgba(152, 213, 255, 1);
+	--c-on-primary: rgba(32, 34, 37, 1);
+	--c-bg: rgba(32, 34, 37, 1);
+	--c-bg-90: rgba(32, 34, 37, 0.9);
+	--c-bg-85: rgba(32, 34, 37, 0.85);
+	--c-bg-75: rgba(32, 34, 37, 0.75);
+	--c-bg-50: rgba(32, 34, 37, 0.5);
+	--c-bg-00: rgba(32, 34, 37, 0);
+	--c-bg-secondary: rgba(21, 23, 26, 1);
+	--c-on-bg: rgba(245, 245, 250, 1);
+	--c-on-bg-75: rgba(245, 245, 250, 0.75);
+	--c-on-bg-60: rgba(245, 245, 250, 0.6);
+	--c-on-bg-50: rgba(245, 245, 250, 0.5);
+	--c-on-bg-40: rgba(245, 245, 250, 0.4);
+	--c-on-bg-35: rgba(245, 245, 250, 0.35);
+	--c-on-bg-25: rgba(245, 245, 250, 0.25);
+	--c-on-bg-15: rgba(245, 245, 250, 0.15);
+	--c-on-bg-10: rgba(245, 245, 250, 0.1);
+	--c-on-bg-08: rgba(245, 245, 250, 0.08);
+	--c-on-bg-05: rgba(245, 245, 250, 0.05);
+	--c-on-bg-03: rgba(245, 245, 250, 0.03);
+	--c-on-bg-02: rgba(245, 245, 250, 0.02);
+	--c-on-bg-01: rgba(245, 245, 250, 0.01);
+	--c-on-bg-00: rgba(245, 245, 250, 0);
+	--c-shadow-harsh: rgba(0, 0, 0, 0.5);
+	--c-shadow-normal: rgba(0, 0, 0, 0.35);
+	--c-shadow-soft: rgba(0, 0, 0, 0.2);
+	--c-danger: rgba(250, 110, 110, 1);
+	--c-danger-20: rgba(250, 110, 110, 0.2);
+}
+
+input:focus,
+input:hover,
+textarea:focus,
+textarea:hover,
+button:focus,
+button:hover {
+	outline: none;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+	-moz-appearance: textfield;
+}
+
+@tailwind utilities;
