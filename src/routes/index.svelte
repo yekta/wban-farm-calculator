@@ -37,10 +37,10 @@
 <div class="w-full min-h-screen flex flex-col items-center justify-start py-8 px-4 text-c-on-bg">
 	<!-- REWARDS -->
 	<form
-		class="w-full md:w-80 max-w-full flex flex-col items-center justify-center bg-c-on-bg-05 rounded-xl px-6 pt-5 pb-6"
+		class="w-full md:w-auto max-w-full flex flex-col md:flex-row gap-5 md:gap-6 items-center justify-center bg-c-on-bg-05 rounded-xl px-6 pt-5 pb-6"
 		on:submit|preventDefault
 	>
-		<div class="w-full flex flex-col pb-1">
+		<div class="w-full md:w-56 max-w-full flex flex-col pb-1">
 			<p class="px-2 text-c-on-bg-75 font-medium">Network</p>
 			<Listbox
 				class="w-full relative text-c-on-bg-75 flex flex-col items-stretch mt-2"
@@ -109,9 +109,9 @@
 				</div>
 			</Listbox>
 		</div>
-		<label for="amountToDistribute" class="w-full mt-5 hover:cursor-text">
+		<label for="amountToDistribute" class="w-full md:w-56 max-w-full hover:cursor-text">
 			<p class="px-2 text-c-on-bg-75 font-medium">
-				Amount to Distribute <span class="text-c-on-bg-40">(wBAN)</span>
+				Amount <span class="text-c-on-bg-40">(wBAN)</span>
 			</p>
 			<input
 				id="amountToDistribute"
@@ -124,7 +124,7 @@
 				px-4 py-2.5 hover:border-c-on-bg-25 focus:border-c-on-bg-75 transition"
 			/>
 		</label>
-		<label for="timeInDays" class="w-full mt-5 hover:cursor-text">
+		<label for="timeInDays" class="w-full md:w-56 max-w-full hover:cursor-text">
 			<p class="px-2 text-c-on-bg-75 font-medium">
 				Timeframe <span class="text-c-on-bg-40">(Days)</span>
 			</p>
@@ -169,9 +169,85 @@
 						defiFundAddress
 					)}
 				</p>
+				<p class="px-2 text-c-on-bg-75 font-semibold mt-6">DeFi Fund</p>
+				<p
+					style="background: var(--c-{NetworkOptions[
+						NETWORKS[selectedNetworkIndex].network
+					].toLowerCase()}-10); color: var(--c-{NetworkOptions[
+						NETWORKS[selectedNetworkIndex].network
+					].toLowerCase()}); border-color: var(--c-{NetworkOptions[
+						NETWORKS[selectedNetworkIndex].network
+					].toLowerCase()}-20);"
+					class="border rounded-lg pl-4 pr-14 py-3 mt-2 text-sm font-medium text-c-primary 
+					break-all font-mono relative overflow-hidden"
+				>
+					{defiFundAddress}
+					<button
+						on:click={() => {
+							steps.send_from_defi.defiFundAddressCopied = true;
+							if (steps.send_from_defi.defiFundAddressTimeout)
+								clearTimeout(steps.send_from_defi.defiFundAddressTimeout);
+							setTimeout(() => {
+								steps.send_from_defi.defiFundAddressCopied = false;
+							}, copyDelay);
+						}}
+						use:copy={defiFundAddress}
+						class="h-full absolute right-0 top-0 flex flex-row items-center justify-center px-3 transition group"
+					>
+						<div
+							style="background: var(--c-{NetworkOptions[
+								NETWORKS[selectedNetworkIndex].network
+							].toLowerCase()}-20);"
+							class="absolute left-0 top-0 w-full h-full opacity-0 group-hover:opacity-100 transition"
+						/>
+						{#if steps.send_from_defi.defiFundAddressCopied}
+							<IconTick />
+						{:else}
+							<IconCopy />
+						{/if}
+					</button>
+				</p>
+				<p class="px-2 text-c-on-bg-75 font-semibold mt-6">Wrap BAN Account</p>
+				<p
+					style="background: var(--c-{NetworkOptions[
+						NETWORKS[selectedNetworkIndex].network
+					].toLowerCase()}-10); color: var(--c-{NetworkOptions[
+						NETWORKS[selectedNetworkIndex].network
+					].toLowerCase()}); border-color: var(--c-{NetworkOptions[
+						NETWORKS[selectedNetworkIndex].network
+					].toLowerCase()}-20);"
+					class="border rounded-lg pl-4 pr-14 py-3 mt-2 text-sm font-medium text-c-primary 
+					break-all font-mono relative overflow-hidden"
+				>
+					{NETWORKS[selectedNetworkIndex].wrapAddressBAN}
+					<button
+						on:click={() => {
+							steps.send_from_defi.wrapAddressCopied = true;
+							if (steps.send_from_defi.wrapAddressTimeout)
+								clearTimeout(steps.send_from_defi.wrapAddressTimeout);
+							setTimeout(() => {
+								steps.send_from_defi.wrapAddressCopied = false;
+							}, copyDelay);
+						}}
+						use:copy={NETWORKS[selectedNetworkIndex].wrapAddressBAN}
+						class="h-full absolute right-0 top-0 flex flex-row items-center justify-center px-3 transition group"
+					>
+						<div
+							style="background: var(--c-{NetworkOptions[
+								NETWORKS[selectedNetworkIndex].network
+							].toLowerCase()}-20);"
+							class="absolute left-0 top-0 w-full h-full opacity-0 group-hover:opacity-100 transition"
+						/>
+						{#if steps.send_from_defi.wrapAddressCopied}
+							<IconTick />
+						{:else}
+							<IconCopy />
+						{/if}
+					</button>
+				</p>
 			</div>
 			<Divider />
-			<!-- Step: Wrap -->
+			<!-- Step: Wrap and send -->
 			<div class="w-full flex flex-col pb-1">
 				<p class="font-bold text-xl px-2">Step 2</p>
 				<p class="text-c-on-bg-75 px-2 mt-1">
@@ -181,6 +257,43 @@
 						NETWORKS[selectedNetworkIndex].explorer,
 						NETWORKS[selectedNetworkIndex].farmManagerAddress
 					)}
+				</p>
+				<p class="px-2 text-c-on-bg-75 font-semibold mt-6">Farm Manager Contract</p>
+				<p
+					style="background: var(--c-{NetworkOptions[
+						NETWORKS[selectedNetworkIndex].network
+					].toLowerCase()}-10); color: var(--c-{NetworkOptions[
+						NETWORKS[selectedNetworkIndex].network
+					].toLowerCase()}); border-color: var(--c-{NetworkOptions[
+						NETWORKS[selectedNetworkIndex].network
+					].toLowerCase()}-20);"
+					class="border rounded-lg pl-4 pr-14 py-3 mt-2 text-sm font-medium text-c-primary 
+					break-all font-mono relative overflow-hidden"
+				>
+					{NETWORKS[selectedNetworkIndex].farmManagerAddress}
+					<button
+						on:click={() => {
+							steps.wrap_and_send.copied = true;
+							if (steps.wrap_and_send.timeout) clearTimeout(steps.wrap_and_send.timeout);
+							setTimeout(() => {
+								steps.wrap_and_send.copied = false;
+							}, copyDelay);
+						}}
+						use:copy={NETWORKS[selectedNetworkIndex].farmManagerAddress}
+						class="h-full absolute right-0 top-0 flex flex-row items-center justify-center px-3 transition group"
+					>
+						<div
+							style="background: var(--c-{NetworkOptions[
+								NETWORKS[selectedNetworkIndex].network
+							].toLowerCase()}-20);"
+							class="absolute left-0 top-0 w-full h-full opacity-0 group-hover:opacity-100 transition"
+						/>
+						{#if steps.wrap_and_send.copied}
+							<IconTick />
+						{:else}
+							<IconCopy />
+						{/if}
+					</button>
 				</p>
 			</div>
 			<Divider />
