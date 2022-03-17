@@ -208,7 +208,7 @@
 							class="absolute left-0 top-0 w-full h-full opacity-0 group-hover:opacity-100 transition"
 						/>
 						{#if steps.send_from_defi.defiFundAddressCopied}
-							<div in:scale={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 0.5 }}>
+							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 0.5 }}>
 								<IconTick class="transform scale-120 h-6 w-6" />
 							</div>
 						{:else}
@@ -250,7 +250,7 @@
 							class="absolute left-0 top-0 w-full h-full opacity-0 group-hover:opacity-100 transition"
 						/>
 						{#if steps.send_from_defi.wrapAddressCopied}
-							<div in:scale={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 0.5 }}>
+							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 0.5 }}>
 								<IconTick class="transform scale-120 h-6 w-6" />
 							</div>
 						{:else}
@@ -304,7 +304,7 @@
 							class="absolute left-0 top-0 w-full h-full opacity-0 group-hover:opacity-100 transition"
 						/>
 						{#if steps.wrap_and_send.copied}
-							<div in:scale={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 0.5 }}>
+							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 0.5 }}>
 								<IconTick class="transform scale-120 h-6 w-6" />
 							</div>
 						{:else}
@@ -363,7 +363,7 @@
 							class="absolute left-0 top-0 w-full h-full opacity-0 group-hover:opacity-100 transition"
 						/>
 						{#if steps.change_rewards.copied}
-							<div in:scale={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 0.5 }}>
+							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 0.5 }}>
 								<IconTick class="transform scale-120 h-6 w-6" />
 							</div>
 						{:else}
@@ -419,7 +419,7 @@
 							class="absolute left-0 top-0 w-full h-full opacity-0 group-hover:opacity-100 transition"
 						/>
 						{#if steps.extend_time.copied}
-							<div in:scale={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 0.5 }}>
+							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 0.5 }}>
 								<IconTick class="transform scale-120 h-6 w-6" />
 							</div>
 						{:else}
