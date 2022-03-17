@@ -12,12 +12,18 @@
 	const maxDecimalPoints = 10;
 	let selectedFarmIndex = 0;
 	let amountToDistribute: number;
+	let amountToDistributeString: string;
 	let timeInDays: number;
+	let timeInDaysString: string;
 	let stepOneCopied = false;
 	let stepTwoCopied = false;
 	let stepOneTimeout;
 	let stepTwoTimeout;
 	const copyDelay = 1000;
+
+	$: if (amountToDistributeString !== undefined)
+		amountToDistribute = getNumber(amountToDistributeString);
+	$: if (timeInDaysString !== undefined) timeInDays = getNumber(timeInDaysString);
 
 	interface FarmManager {
 		network: NetworkOptions;
@@ -61,14 +67,8 @@
 		return Math.floor(value * multiplier) / multiplier;
 	}
 
-	function updateTextView(e, type) {
-		console.log(e.target.value);
+	function updateTextView(e) {
 		let num = getNumber(e.target.value);
-		if (type == 'amountToDistribute') {
-			amountToDistribute = num;
-		} else if (type == 'timeInDays') {
-			timeInDays = num;
-		}
 		if (num == 0) {
 			e.target.value = '';
 		} else {
@@ -76,9 +76,9 @@
 		}
 	}
 	function getNumber(_str) {
-		var arr = _str.split('');
-		var out = new Array();
-		for (var cnt = 0; cnt < arr.length; cnt++) {
+		let arr = _str.split('');
+		let out = new Array();
+		for (let cnt = 0; cnt < arr.length; cnt++) {
 			if (isNaN(arr[cnt]) == false) {
 				out.push(arr[cnt]);
 			}
@@ -172,7 +172,8 @@
 				type="text"
 				placeholder="Amount"
 				autocomplete="off"
-				on:keyup|preventDefault={(e) => updateTextView(e, 'amountToDistribute')}
+				bind:value={amountToDistributeString}
+				on:keyup|preventDefault={updateTextView}
 				class="w-full text-lg font-semibold mt-2 bg-c-on-bg-05 border border-transparent rounded-lg 
 				px-4 py-2.5 hover:border-c-on-bg-25 focus:border-c-on-bg-75 transition"
 			/>
@@ -186,7 +187,8 @@
 				type="text"
 				placeholder="Days"
 				autocomplete="off"
-				on:keyup|preventDefault={(e) => updateTextView(e, 'timeInDays')}
+				bind:value={timeInDaysString}
+				on:keyup|preventDefault={updateTextView}
 				class="w-full text-lg font-semibold mt-2 bg-c-on-bg-05 border border-transparent rounded-lg 
 				px-4 py-2.5 hover:border-c-on-bg-25 focus:border-c-on-bg-75 transition"
 			/>
