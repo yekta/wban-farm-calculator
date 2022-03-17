@@ -122,6 +122,9 @@
 				autocomplete="off"
 				bind:value={amountToDistributeString}
 				on:keyup|preventDefault={updateTextView}
+				style="color: var(--c-{NetworkOptions[
+					NETWORKS[selectedNetworkIndex].network
+				].toLowerCase()})"
 				class="w-full text-lg font-semibold mt-2 bg-c-on-bg-05 border border-transparent rounded-lg 
 				px-4 py-2.5 hover:border-c-on-bg-25 focus:border-c-on-bg-75 transition"
 			/>
