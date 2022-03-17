@@ -23,8 +23,8 @@
 	let selectedNetworkIndex = 0;
 	let amountToDistribute: number;
 	let amountToDistributeString: string;
-	let timeInDays: number;
-	let timeInDaysString: string;
+	let timeInDays: number = 28;
+	let timeInDaysString: string = '28';
 	const copyDelay = 1000;
 
 	$: if (amountToDistributeString !== undefined)
