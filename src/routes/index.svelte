@@ -159,7 +159,7 @@
 				</div>
 			</Listbox>
 		</div>
-		<label for="amountToDistribute" class="w-full mt-5">
+		<label for="amountToDistribute" class="w-full mt-5 hover:cursor-text">
 			<p class="px-2 text-c-on-bg-75 font-medium">
 				Amount to Distribute <span class="text-c-on-bg-40">(wBAN)</span>
 			</p>
@@ -173,7 +173,7 @@
 				px-4 py-2 hover:border-c-on-bg-25 focus:border-c-primary transition"
 			/>
 		</label>
-		<label for="timeInDays" class="w-full mt-5">
+		<label for="timeInDays" class="w-full mt-5 hover:cursor-text">
 			<p class="px-2 text-c-on-bg-75 font-medium">
 				Time <span class="text-c-on-bg-40">(Days)</span>
 			</p>
