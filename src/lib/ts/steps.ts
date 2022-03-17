@@ -7,11 +7,11 @@ export let steps = {
 			wrapAddress: string,
 			defiFundAddress: string
 		) =>
-			`Send <span class="font-semibold" style="color: var(--c-${network});">${amount}</span> BAN from <a target="_blank" href="${banExplorer}/explorer/account/${defiFundAddress}" class="underline" style="color: var(--c-${network});">DeFi fund</a> to <a target="_blank" href="${banExplorer}/explorer/account/${wrapAddress}" class="underline" style="color: var(--c-${network});">the wrap BAN account</a> linked to the bridge.`
+			`Send <span class="font-semibold" style="color: var(--c-${network});">${amount}</span> BAN from <a target="_blank" href="${banExplorer}/explorer/account/${defiFundAddress}" class="hover:underline" style="color: var(--c-${network});">DeFi fund</a> to <a target="_blank" href="${banExplorer}/explorer/account/${wrapAddress}" class="hover:underline" style="color: var(--c-${network});">the wrap BAN account</a> linked to the bridge.`
 	},
 	wrap_and_send: {
 		descriptionFunc: (amount: string, network: string, explorer: string, address: string) =>
-			`Wrap <span class="font-semibold" style="color: var(--c-${network});">${amount}</span> BAN and send the wBAN to <a target="_blank" href="${explorer}/address/${address}" class="underline" style="color: var(--c-${network});">the farm manager contract</a>.`
+			`Wrap <span class="font-semibold" style="color: var(--c-${network});">${amount}</span> BAN and send the wBAN to <a target="_blank" href="${explorer}/address/${address}" class="hover:underline" style="color: var(--c-${network});">the farm manager contract</a>.`
 	},
 	change_rewards: {
 		copied: false,
