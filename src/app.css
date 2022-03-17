@@ -50,6 +50,11 @@
 	--c-bsc-20: rgba(220, 194, 110, 0.2);
 }
 
+body {
+	color: var(--c-on-bg);
+	background: var(--c-bg);
+}
+
 input::placeholder {
 	color: var(--c-on-bg-40);
 	font-weight: 400;

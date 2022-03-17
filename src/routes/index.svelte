@@ -18,14 +18,14 @@
 	import { scale } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
 
-	const dayInSeconds = 60 * 60 * 24;
-	const maxDecimalPoints = 10;
+	const DAY_IN_SECONDS = 60 * 60 * 24;
+	const MAX_DECIMAL_POINTS = 9;
+	const COPY_DELAY = 1000;
 	let selectedNetworkIndex = 0;
 	let amountToDistributeString: string;
 	let amountToDistribute: number;
 	let timeInDaysString: string = '28';
 	let timeInDays: number;
-	const copyDelay = 1000;
 
 	$: if (amountToDistributeString !== undefined)
 		amountToDistribute = getNumber(amountToDistributeString);
@@ -196,7 +196,7 @@
 								clearTimeout(steps.send_from_defi.defiFundAddressTimeout);
 							steps.send_from_defi.defiFundAddressTimeout = setTimeout(() => {
 								steps.send_from_defi.defiFundAddressCopied = false;
-							}, copyDelay);
+							}, COPY_DELAY);
 						}}
 						use:copy={defiFundAddress}
 						class="h-full absolute right-0 top-0 flex flex-row items-center justify-center px-3 transition group"
@@ -208,11 +208,11 @@
 							class="absolute left-0 top-0 w-full h-full opacity-0 group-hover:opacity-100 transition"
 						/>
 						{#if steps.send_from_defi.defiFundAddressCopied}
-							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 0.5 }}>
-								<IconTick class="transform scale-120 h-6 w-6" />
+							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 1 }}>
+								<IconTick class="transform scale-125 h-6 w-6" />
 							</div>
 						{:else}
-							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 0.5 }}>
+							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 1 }}>
 								<IconCopy />
 							</div>
 						{/if}
@@ -238,7 +238,7 @@
 								clearTimeout(steps.send_from_defi.wrapAddressTimeout);
 							steps.send_from_defi.wrapAddressTimeout = setTimeout(() => {
 								steps.send_from_defi.wrapAddressCopied = false;
-							}, copyDelay);
+							}, COPY_DELAY);
 						}}
 						use:copy={NETWORKS[selectedNetworkIndex].wrapAddressBAN}
 						class="h-full absolute right-0 top-0 flex flex-row items-center justify-center px-3 transition group"
@@ -250,11 +250,11 @@
 							class="absolute left-0 top-0 w-full h-full opacity-0 group-hover:opacity-100 transition"
 						/>
 						{#if steps.send_from_defi.wrapAddressCopied}
-							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 0.5 }}>
-								<IconTick class="transform scale-120 h-6 w-6" />
+							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 1 }}>
+								<IconTick class="transform scale-125 h-6 w-6" />
 							</div>
 						{:else}
-							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 0.5 }}>
+							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 1 }}>
 								<IconCopy />
 							</div>
 						{/if}
@@ -292,7 +292,7 @@
 							if (steps.wrap_and_send.timeout) clearTimeout(steps.wrap_and_send.timeout);
 							steps.wrap_and_send.timeout = setTimeout(() => {
 								steps.wrap_and_send.copied = false;
-							}, copyDelay);
+							}, COPY_DELAY);
 						}}
 						use:copy={NETWORKS[selectedNetworkIndex].farmManagerAddress}
 						class="h-full absolute right-0 top-0 flex flex-row items-center justify-center px-3 transition group"
@@ -304,11 +304,11 @@
 							class="absolute left-0 top-0 w-full h-full opacity-0 group-hover:opacity-100 transition"
 						/>
 						{#if steps.wrap_and_send.copied}
-							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 0.5 }}>
-								<IconTick class="transform scale-120 h-6 w-6" />
+							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 1 }}>
+								<IconTick class="transform scale-125 h-6 w-6" />
 							</div>
 						{:else}
-							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 0.5 }}>
+							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 1 }}>
 								<IconCopy />
 							</div>
 						{/if}
@@ -336,7 +336,10 @@
 					{steps.change_rewards.commandTextFunc({
 						network: NetworkOptions[NETWORKS[selectedNetworkIndex].network].toLowerCase(),
 						address: NETWORKS[selectedNetworkIndex].farmManagerAddress,
-						banASecond: floorTo(amountToDistribute / (timeInDays * dayInSeconds), maxDecimalPoints)
+						banASecond: floorTo(
+							amountToDistribute / (timeInDays * DAY_IN_SECONDS),
+							MAX_DECIMAL_POINTS
+						)
 					})}
 					<button
 						on:click={() => {
@@ -344,14 +347,14 @@
 							if (steps.change_rewards.timeout) clearTimeout(steps.change_rewards.timeout);
 							steps.change_rewards.timeout = setTimeout(() => {
 								steps.change_rewards.copied = false;
-							}, copyDelay);
+							}, COPY_DELAY);
 						}}
 						use:copy={steps.change_rewards.commandTextFunc({
 							network: NetworkOptions[NETWORKS[selectedNetworkIndex].network].toLowerCase(),
 							address: NETWORKS[selectedNetworkIndex].farmManagerAddress,
 							banASecond: floorTo(
-								amountToDistribute / (timeInDays * dayInSeconds),
-								maxDecimalPoints
+								amountToDistribute / (timeInDays * DAY_IN_SECONDS),
+								MAX_DECIMAL_POINTS
 							)
 						})}
 						class="h-full absolute right-0 top-0 flex flex-row items-center justify-center px-3 transition group"
@@ -363,11 +366,11 @@
 							class="absolute left-0 top-0 w-full h-full opacity-0 group-hover:opacity-100 transition"
 						/>
 						{#if steps.change_rewards.copied}
-							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 0.5 }}>
-								<IconTick class="transform scale-120 h-6 w-6" />
+							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 1 }}>
+								<IconTick class="transform scale-125 h-6 w-6" />
 							</div>
 						{:else}
-							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 0.5 }}>
+							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 1 }}>
 								<IconCopy />
 							</div>
 						{/if}
@@ -395,7 +398,7 @@
 					{steps.extend_time.commandTextFunc({
 						network: NetworkOptions[NETWORKS[selectedNetworkIndex].network].toLowerCase(),
 						address: NETWORKS[selectedNetworkIndex].farmManagerAddress,
-						timeInSeconds: timeInDays * dayInSeconds
+						timeInSeconds: timeInDays * DAY_IN_SECONDS
 					})}
 					<button
 						on:click={() => {
@@ -403,12 +406,12 @@
 							if (steps.extend_time.timeout) clearTimeout(steps.extend_time.timeout);
 							steps.extend_time.timeout = setTimeout(() => {
 								steps.extend_time.copied = false;
-							}, copyDelay);
+							}, COPY_DELAY);
 						}}
 						use:copy={steps.extend_time.commandTextFunc({
 							network: NetworkOptions[NETWORKS[selectedNetworkIndex].network].toLowerCase(),
 							address: NETWORKS[selectedNetworkIndex].farmManagerAddress,
-							timeInSeconds: timeInDays * dayInSeconds
+							timeInSeconds: timeInDays * DAY_IN_SECONDS
 						})}
 						class="h-full absolute right-0 top-0 flex flex-row items-center justify-center px-3 transition group"
 					>
@@ -419,11 +422,11 @@
 							class="absolute left-0 top-0 w-full h-full opacity-0 group-hover:opacity-100 transition"
 						/>
 						{#if steps.extend_time.copied}
-							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 0.5 }}>
-								<IconTick class="transform scale-120 h-6 w-6" />
+							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 1 }}>
+								<IconTick class="transform scale-125 h-6 w-6" />
 							</div>
 						{:else}
-							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 0.5 }}>
+							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 1 }}>
 								<IconCopy />
 							</div>
 						{/if}
