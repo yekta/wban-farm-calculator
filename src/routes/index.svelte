@@ -15,6 +15,8 @@
 		Transition
 	} from '@rgossiaux/svelte-headlessui';
 	import { copy } from 'svelte-copy';
+	import { scale } from 'svelte/transition';
+	import { cubicOut } from 'svelte/easing';
 
 	const dayInSeconds = 60 * 60 * 24;
 	const maxDecimalPoints = 10;
@@ -192,7 +194,7 @@
 							steps.send_from_defi.defiFundAddressCopied = true;
 							if (steps.send_from_defi.defiFundAddressTimeout)
 								clearTimeout(steps.send_from_defi.defiFundAddressTimeout);
-							setTimeout(() => {
+							steps.send_from_defi.defiFundAddressTimeout = setTimeout(() => {
 								steps.send_from_defi.defiFundAddressCopied = false;
 							}, copyDelay);
 						}}
@@ -206,9 +208,13 @@
 							class="absolute left-0 top-0 w-full h-full opacity-0 group-hover:opacity-100 transition"
 						/>
 						{#if steps.send_from_defi.defiFundAddressCopied}
-							<IconTick />
+							<div in:scale={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 0.5 }}>
+								<IconTick class="transform scale-120 h-6 w-6" />
+							</div>
 						{:else}
-							<IconCopy />
+							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 0.5 }}>
+								<IconCopy />
+							</div>
 						{/if}
 					</button>
 				</p>
@@ -230,7 +236,7 @@
 							steps.send_from_defi.wrapAddressCopied = true;
 							if (steps.send_from_defi.wrapAddressTimeout)
 								clearTimeout(steps.send_from_defi.wrapAddressTimeout);
-							setTimeout(() => {
+							steps.send_from_defi.wrapAddressTimeout = setTimeout(() => {
 								steps.send_from_defi.wrapAddressCopied = false;
 							}, copyDelay);
 						}}
@@ -244,9 +250,13 @@
 							class="absolute left-0 top-0 w-full h-full opacity-0 group-hover:opacity-100 transition"
 						/>
 						{#if steps.send_from_defi.wrapAddressCopied}
-							<IconTick />
+							<div in:scale={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 0.5 }}>
+								<IconTick class="transform scale-120 h-6 w-6" />
+							</div>
 						{:else}
-							<IconCopy />
+							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 0.5 }}>
+								<IconCopy />
+							</div>
 						{/if}
 					</button>
 				</p>
@@ -280,7 +290,7 @@
 						on:click={() => {
 							steps.wrap_and_send.copied = true;
 							if (steps.wrap_and_send.timeout) clearTimeout(steps.wrap_and_send.timeout);
-							setTimeout(() => {
+							steps.wrap_and_send.timeout = setTimeout(() => {
 								steps.wrap_and_send.copied = false;
 							}, copyDelay);
 						}}
@@ -294,9 +304,13 @@
 							class="absolute left-0 top-0 w-full h-full opacity-0 group-hover:opacity-100 transition"
 						/>
 						{#if steps.wrap_and_send.copied}
-							<IconTick />
+							<div in:scale={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 0.5 }}>
+								<IconTick class="transform scale-120 h-6 w-6" />
+							</div>
 						{:else}
-							<IconCopy />
+							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 0.5 }}>
+								<IconCopy />
+							</div>
 						{/if}
 					</button>
 				</p>
@@ -349,9 +363,13 @@
 							class="absolute left-0 top-0 w-full h-full opacity-0 group-hover:opacity-100 transition"
 						/>
 						{#if steps.change_rewards.copied}
-							<IconTick />
+							<div in:scale={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 0.5 }}>
+								<IconTick class="transform scale-120 h-6 w-6" />
+							</div>
 						{:else}
-							<IconCopy />
+							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 0.5 }}>
+								<IconCopy />
+							</div>
 						{/if}
 					</button>
 				</p>
@@ -383,7 +401,7 @@
 						on:click={() => {
 							steps.extend_time.copied = true;
 							if (steps.extend_time.timeout) clearTimeout(steps.extend_time.timeout);
-							setTimeout(() => {
+							steps.extend_time.timeout = setTimeout(() => {
 								steps.extend_time.copied = false;
 							}, copyDelay);
 						}}
@@ -401,9 +419,13 @@
 							class="absolute left-0 top-0 w-full h-full opacity-0 group-hover:opacity-100 transition"
 						/>
 						{#if steps.extend_time.copied}
-							<IconTick />
+							<div in:scale={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 0.5 }}>
+								<IconTick class="transform scale-120 h-6 w-6" />
+							</div>
 						{:else}
-							<IconCopy />
+							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 0.5 }}>
+								<IconCopy />
+							</div>
 						{/if}
 					</button>
 				</p>

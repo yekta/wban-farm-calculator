@@ -82,6 +82,10 @@ module.exports = {
 				'5/7': '71.4285%',
 				'6/7': '85.7142%'
 			},
+			scale: {
+				115: '115%',
+				120: '120%'
+			},
 			boxShadow: {
 				card: '0rem 0rem 0rem -0.25rem var(--c-shadow-harsh)',
 				'card-hover': '0 1rem 2rem -0.25rem var(--c-shadow-harsh)',
