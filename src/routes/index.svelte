@@ -98,8 +98,11 @@
 			>
 				<ListboxButton
 					as="button"
-					class="w-full text-c-on-bg font-semibold pl-4 pr-2.5 py-2.5 border border-c-on-bg-25 hover:border-c-on-bg-35 rounded-lg
-						flex flex-row justify-between items-center hover:bg-c-on-bg-15 transition-all duration-250 {open
+					style="color: var(--c-{NetworkOptions[
+						farmManagers[selectedFarmIndex].network
+					].toLowerCase()})"
+					class="w-full bg-c-on-bg-05 font-semibold pl-4 pr-2.5 py-2.5 border border-transparent hover:border-c-on-bg-25 rounded-lg
+						flex flex-row justify-between items-center transition-all duration-250 {open
 						? 'rounded-b-none shadow-dropdown-hover'
 						: 'shadow-dropdown'}"
 				>
@@ -108,7 +111,7 @@
 					</p>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
-						class="h-5 w-5 flex-shrink-0 transition duration-250 transform {open
+						class="h-5 w-5 flex-shrink-0 transition duration-250 transform text-c-on-bg-50 {open
 							? 'rotate-180'
 							: ''}"
 						viewBox="0 0 20 20"
@@ -139,6 +142,9 @@
 								{#if index != selectedFarmIndex}
 									<ListboxOption
 										as="button"
+										style="color: var(--c-{NetworkOptions[
+											farmManagers[index].network
+										].toLowerCase()})"
 										class="w-full font-semibold px-4 py-2.5 hover:bg-c-on-bg-15 transition flex flex-row items-center"
 										value={index}
 									>
@@ -195,7 +201,7 @@
 		leaveTo="scale-y-75 opacity-0 -translate-y-2"
 		class="max-w-full"
 	>
-		<div class="bg-c-on-bg-05 w-[72rem] max-w-full rounded-xl p-6 container mt-8">
+		<div class="bg-c-on-bg-05 w-[74rem] max-w-full rounded-xl p-6 container mt-8">
 			<!-- Step 1 -->
 			<div class="w-full flex flex-col">
 				<p class="font-bold text-xl px-2">Step 1</p>
@@ -204,7 +210,14 @@
 					command below:
 				</p>
 				<p
-					class="bg-c-primary-10 border border-c-primary-20 rounded-lg pl-4 pr-12 py-3 mt-4 text-sm font-medium text-c-primary break-all font-mono relative overflow-hidden"
+					style="background: var(--c-{NetworkOptions[
+						farmManagers[selectedFarmIndex].network
+					].toLowerCase()}-10); color: var(--c-{NetworkOptions[
+						farmManagers[selectedFarmIndex].network
+					].toLowerCase()}); border-color: var(--c-{NetworkOptions[
+						farmManagers[selectedFarmIndex].network
+					].toLowerCase()}-20);"
+					class="border rounded-lg pl-4 pr-14 py-3 mt-4 text-sm font-medium text-c-primary break-all font-mono relative overflow-hidden"
 				>
 					{getStepOneCommand(
 						NetworkOptions[farmManagers[selectedFarmIndex].network].toLowerCase(),
@@ -224,8 +237,14 @@
 							farmManagers[selectedFarmIndex].address,
 							floorTo(amountToDistribute / (timeInDays * dayInSeconds), maxDecimalPoints)
 						)}
-						class="h-full absolute right-0 top-0 flex flex-row items-center justify-center hover:bg-c-primary-10 px-3 transition"
+						class="h-full absolute right-0 top-0 flex flex-row items-center justify-center px-3 transition group"
 					>
+						<div
+							style="background: var(--c-{NetworkOptions[
+								farmManagers[selectedFarmIndex].network
+							].toLowerCase()}-20);"
+							class="absolute left-0 top-0 w-full h-full opacity-0 group-hover:opacity-100 transition"
+						/>
 						{#if stepOneCopied}
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -265,7 +284,14 @@
 					Extend the time that the farm manager contract would run for by running the command below:
 				</p>
 				<p
-					class="bg-c-primary-10 border border-c-primary-20 rounded-lg pl-4 pr-12 py-3 mt-4 text-sm font-medium text-c-primary break-all font-mono relative overflow-hidden"
+					style="background: var(--c-{NetworkOptions[
+						farmManagers[selectedFarmIndex].network
+					].toLowerCase()}-10); color: var(--c-{NetworkOptions[
+						farmManagers[selectedFarmIndex].network
+					].toLowerCase()}); border-color: var(--c-{NetworkOptions[
+						farmManagers[selectedFarmIndex].network
+					].toLowerCase()}-20);"
+					class="border rounded-lg pl-4 pr-14 py-3 mt-4 text-sm font-medium text-c-primary break-all font-mono relative overflow-hidden"
 				>
 					{getStepTwoCommand(
 						NetworkOptions[farmManagers[selectedFarmIndex].network].toLowerCase(),
@@ -285,8 +311,14 @@
 							farmManagers[selectedFarmIndex].address,
 							timeInDays * dayInSeconds
 						)}
-						class="h-full absolute right-0 top-0 flex flex-row items-center justify-center hover:bg-c-primary-10 px-3 transition"
+						class="h-full absolute right-0 top-0 flex flex-row items-center justify-center px-3 transition group"
 					>
+						<div
+							style="background: var(--c-{NetworkOptions[
+								farmManagers[selectedFarmIndex].network
+							].toLowerCase()}-20);"
+							class="absolute left-0 top-0 w-full h-full opacity-0 group-hover:opacity-100 transition"
+						/>
 						{#if stepTwoCopied}
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
