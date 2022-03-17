@@ -21,10 +21,10 @@
 	const dayInSeconds = 60 * 60 * 24;
 	const maxDecimalPoints = 10;
 	let selectedNetworkIndex = 0;
-	let amountToDistribute: number;
 	let amountToDistributeString: string;
-	let timeInDays: number = 28;
+	let amountToDistribute: number;
 	let timeInDaysString: string = '28';
+	let timeInDays: number;
 	const copyDelay = 1000;
 
 	$: if (amountToDistributeString !== undefined)
