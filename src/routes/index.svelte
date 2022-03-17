@@ -42,7 +42,7 @@
 	<div class="w-full md:w-[44rem] flex flex-col gap-4 md:gap-6">
 		<!-- REWARDS -->
 		<form
-			class="w-full max-w-full flex flex-col md:flex-row gap-5 md:gap-6 p-4 md:p-6 items-center justify-center bg-c-on-bg-05 rounded-xl"
+			class="w-full max-w-full flex flex-col md:flex-row gap-5 md:gap-6 p-4 md:p-6 md:pt-5 items-center justify-center bg-c-on-bg-05 rounded-xl"
 			on:submit|preventDefault
 		>
 			<div class="w-full md:flex-1 max-w-full flex flex-col pb-1">
