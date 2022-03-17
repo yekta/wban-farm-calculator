@@ -34,7 +34,9 @@
 	}
 </script>
 
-<div class="w-full min-h-screen flex flex-col items-center justify-start py-8 px-4 text-c-on-bg">
+<div
+	class="w-full min-h-screen flex flex-col items-center justify-start p-4 md:py-8 gap-4 md:gap-8 text-c-on-bg"
+>
 	<!-- REWARDS -->
 	<form
 		class="w-full md:w-auto max-w-full flex flex-col md:flex-row gap-5 md:gap-6 items-center justify-center bg-c-on-bg-05 rounded-xl px-6 pt-5 pb-6"
@@ -156,7 +158,7 @@
 		leaveTo="scale-y-75 opacity-0 -translate-y-2"
 		class="max-w-full"
 	>
-		<div class="w-full md:w-[42rem] max-w-full bg-c-on-bg-05 rounded-xl p-6 container mt-8">
+		<div class="w-full md:w-[42rem] max-w-full bg-c-on-bg-05 rounded-xl p-6 container">
 			<!-- Step: Send to intermediate account -->
 			<div class="w-full flex flex-col pb-1">
 				<p class="font-bold text-xl px-2">Step 1</p>
