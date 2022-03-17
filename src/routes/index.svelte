@@ -1,6 +1,12 @@
 <script lang="ts">
+	import Divider from '$lib/components/Divider.svelte';
 	import IconCopy from '$lib/components/icons/IconCopy.svelte';
 	import IconTick from '$lib/components/icons/IconTick.svelte';
+	import { banExplorer, defiFundAddress, NETWORKS } from '$lib/ts/constants';
+	import { NetworkOptions } from '$lib/ts/enums';
+	import { getNumber, updateTextView, floorTo } from '$lib/ts/helpers';
+	import { steps } from '$lib/ts/steps';
+
 	import {
 		Listbox,
 		ListboxButton,
@@ -12,99 +18,40 @@
 
 	const dayInSeconds = 60 * 60 * 24;
 	const maxDecimalPoints = 10;
-	let selectedFarmIndex = 0;
+	let selectedNetworkIndex = 0;
 	let amountToDistribute: number;
 	let amountToDistributeString: string;
 	let timeInDays: number;
 	let timeInDaysString: string;
-	let stepOneCopied = false;
-	let stepTwoCopied = false;
-	let stepOneTimeout;
-	let stepTwoTimeout;
 	const copyDelay = 1000;
 
 	$: if (amountToDistributeString !== undefined)
 		amountToDistribute = getNumber(amountToDistributeString);
 	$: if (timeInDaysString !== undefined) timeInDays = getNumber(timeInDaysString);
 
-	interface FarmManager {
-		network: NetworkOptions;
-		address: string;
-	}
-	enum NetworkOptions {
-		Polygon,
-		BSC,
-		Fantom
-	}
-
-	const farmManagers: FarmManager[] = [
-		{
-			network: NetworkOptions.Fantom,
-			address: '0xd91f84d4e2d9f4fa508c61356a6cb81a306e5287'
-		},
-		{
-			network: NetworkOptions.Polygon,
-			address: '0xefa4aED9Cf41A8A0FcdA4e88EfA2F60675bAeC9F'
-		},
-		{
-			network: NetworkOptions.BSC,
-			address: '0x1E30E12e82956540bf870A40FD1215fC083a3751'
-		}
-	];
-
-	function setSelectedFarmIndex(e) {
-		selectedFarmIndex = e.detail;
-	}
-
-	function getStepOneCommand(network: string, address: string, banASecond: number) {
-		return `npx hardhat --network ${network} benis:change-rewards --benis ${address} --rewards ${banASecond}`;
-	}
-	function getStepTwoCommand(network: string, address: string, timeInSeconds: number) {
-		return `npx hardhat --network ${network} benis:add-time --benis ${address} --time ${timeInSeconds}`;
-	}
-	// adjust decimal points to a certain number
-	function floorTo(value: number, precision: number) {
-		var multiplier = Math.pow(10, precision);
-		return Math.floor(value * multiplier) / multiplier;
-	}
-
-	function updateTextView(e) {
-		let num = getNumber(e.target.value);
-		if (num == 0) {
-			e.target.value = '';
-		} else {
-			e.target.value = num.toLocaleString('en-US');
-		}
-	}
-	function getNumber(_str) {
-		let arr = _str.split('');
-		let out = new Array();
-		for (let cnt = 0; cnt < arr.length; cnt++) {
-			if (isNaN(arr[cnt]) == false) {
-				out.push(arr[cnt]);
-			}
-		}
-		return Number(out.join(''));
+	function setSelectedNetwork(e) {
+		selectedNetworkIndex = e.detail;
 	}
 </script>
 
 <div class="w-full min-h-screen flex flex-col items-center justify-start py-8 px-4 text-c-on-bg">
+	<!-- REWARDS -->
 	<form
-		class="w-80 max-w-full flex flex-col items-center justify-center bg-c-on-bg-05 rounded-xl px-6 pt-5 pb-6"
+		class="w-full md:w-80 max-w-full flex flex-col items-center justify-center bg-c-on-bg-05 rounded-xl px-6 pt-5 pb-6"
 		on:submit|preventDefault
 	>
-		<div class="w-full flex flex-col">
+		<div class="w-full flex flex-col pb-1">
 			<p class="px-2 text-c-on-bg-75 font-medium">Network</p>
 			<Listbox
 				class="w-full relative text-c-on-bg-75 flex flex-col items-stretch mt-2"
-				value={selectedFarmIndex}
-				on:change={setSelectedFarmIndex}
+				value={selectedNetworkIndex}
+				on:change={setSelectedNetwork}
 				let:open
 			>
 				<ListboxButton
 					as="button"
 					style="color: var(--c-{NetworkOptions[
-						farmManagers[selectedFarmIndex].network
+						NETWORKS[selectedNetworkIndex].network
 					].toLowerCase()})"
 					class="text-lg w-full bg-c-on-bg-05 font-semibold pl-4 pr-2.5 py-2.5 border border-transparent hover:border-c-on-bg-25 rounded-lg
 						flex flex-row justify-between items-center transition-all duration-250 {open
@@ -112,7 +59,7 @@
 						: 'shadow-dropdown'}"
 				>
 					<p class="mr-1 max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap">
-						{NetworkOptions[farmManagers[selectedFarmIndex].network]}
+						{NetworkOptions[NETWORKS[selectedNetworkIndex].network]}
 					</p>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -143,18 +90,16 @@
 							class="w-full shadow-dropdown-hover bg-c-bg absolute top-0 right-0 rounded-lg rounded-t-none border border-t-0 
 							border-c-on-bg-10 overflow-hidden flex flex-col items-stretch"
 						>
-							{#each farmManagers as farm, index}
-								{#if index != selectedFarmIndex}
+							{#each NETWORKS as farm, index}
+								{#if index != selectedNetworkIndex}
 									<ListboxOption
 										as="button"
-										style="color: var(--c-{NetworkOptions[
-											farmManagers[index].network
-										].toLowerCase()})"
+										style="color: var(--c-{NetworkOptions[NETWORKS[index].network].toLowerCase()})"
 										class="w-full text-lg font-semibold px-4 py-2.5 hover:bg-c-on-bg-15 transition flex flex-row items-center"
 										value={index}
 									>
 										<p class="w-full overflow-hidden overflow-ellipsis whitespace-nowrap text-left">
-											{NetworkOptions[farmManagers[index].network]}
+											{NetworkOptions[NETWORKS[index].network]}
 										</p>
 									</ListboxOption>
 								{/if}
@@ -195,6 +140,7 @@
 			/>
 		</label>
 	</form>
+	<!-- STEPS -->
 	<Transition
 		show={amountToDistribute !== null &&
 			!isNaN(amountToDistribute) &&
@@ -210,51 +156,81 @@
 		leaveTo="scale-y-75 opacity-0 -translate-y-2"
 		class="max-w-full"
 	>
-		<div class="bg-c-on-bg-05 w-[74rem] max-w-full rounded-xl p-6 container mt-8">
-			<!-- Step 1 -->
-			<div class="w-full flex flex-col">
+		<div class="w-full md:w-[42rem] max-w-full bg-c-on-bg-05 rounded-xl p-6 container mt-8">
+			<!-- Step: Send to intermediate account -->
+			<div class="w-full flex flex-col pb-1">
 				<p class="font-bold text-xl px-2">Step 1</p>
 				<p class="text-c-on-bg-75 px-2 mt-1">
-					Change the wBAN rewards given every second by the farm manager contract by running the
-					command below:
+					{@html steps.send_from_defi.descriptionFunc(
+						amountToDistribute.toLocaleString('en-US'),
+						NetworkOptions[NETWORKS[selectedNetworkIndex].network].toLowerCase(),
+						banExplorer,
+						NETWORKS[selectedNetworkIndex].wrapAddressBAN,
+						defiFundAddress
+					)}
+				</p>
+			</div>
+			<Divider />
+			<!-- Step: Wrap -->
+			<div class="w-full flex flex-col pb-1">
+				<p class="font-bold text-xl px-2">Step 2</p>
+				<p class="text-c-on-bg-75 px-2 mt-1">
+					{@html steps.wrap_and_send.descriptionFunc(
+						amountToDistribute.toLocaleString('en-US'),
+						NetworkOptions[NETWORKS[selectedNetworkIndex].network].toLowerCase(),
+						NETWORKS[selectedNetworkIndex].explorer,
+						NETWORKS[selectedNetworkIndex].farmManagerAddress
+					)}
+				</p>
+			</div>
+			<Divider />
+			<!-- Step: Change Rewards -->
+			<div class="w-full flex flex-col pb-1 ">
+				<p class="font-bold text-xl px-2">Step 3</p>
+				<p class="text-c-on-bg-75 px-2 mt-1">
+					{steps.change_rewards.descriptionFunc()}
 				</p>
 				<p
 					style="background: var(--c-{NetworkOptions[
-						farmManagers[selectedFarmIndex].network
+						NETWORKS[selectedNetworkIndex].network
 					].toLowerCase()}-10); color: var(--c-{NetworkOptions[
-						farmManagers[selectedFarmIndex].network
+						NETWORKS[selectedNetworkIndex].network
 					].toLowerCase()}); border-color: var(--c-{NetworkOptions[
-						farmManagers[selectedFarmIndex].network
+						NETWORKS[selectedNetworkIndex].network
 					].toLowerCase()}-20);"
-					class="border rounded-lg pl-4 pr-14 py-3 mt-4 text-sm font-medium text-c-primary break-all font-mono relative overflow-hidden"
+					class="border rounded-lg pl-4 pr-14 py-3 mt-4 text-sm font-medium text-c-primary 
+					break-all font-mono relative overflow-hidden"
 				>
-					{getStepOneCommand(
-						NetworkOptions[farmManagers[selectedFarmIndex].network].toLowerCase(),
-						farmManagers[selectedFarmIndex].address,
-						floorTo(amountToDistribute / (timeInDays * dayInSeconds), maxDecimalPoints)
-					)}
+					{steps.change_rewards.commandTextFunc({
+						network: NetworkOptions[NETWORKS[selectedNetworkIndex].network].toLowerCase(),
+						address: NETWORKS[selectedNetworkIndex].farmManagerAddress,
+						banASecond: floorTo(amountToDistribute / (timeInDays * dayInSeconds), maxDecimalPoints)
+					})}
 					<button
 						on:click={() => {
-							stepOneCopied = true;
-							if (stepOneTimeout) clearTimeout(stepOneTimeout);
-							stepOneTimeout = setTimeout(() => {
-								stepOneCopied = false;
+							steps.change_rewards.copied = true;
+							if (steps.change_rewards.timeout) clearTimeout(steps.change_rewards.timeout);
+							steps.change_rewards.timeout = setTimeout(() => {
+								steps.change_rewards.copied = false;
 							}, copyDelay);
 						}}
-						use:copy={getStepOneCommand(
-							NetworkOptions[farmManagers[selectedFarmIndex].network].toLowerCase(),
-							farmManagers[selectedFarmIndex].address,
-							floorTo(amountToDistribute / (timeInDays * dayInSeconds), maxDecimalPoints)
-						)}
+						use:copy={steps.change_rewards.commandTextFunc({
+							network: NetworkOptions[NETWORKS[selectedNetworkIndex].network].toLowerCase(),
+							address: NETWORKS[selectedNetworkIndex].farmManagerAddress,
+							banASecond: floorTo(
+								amountToDistribute / (timeInDays * dayInSeconds),
+								maxDecimalPoints
+							)
+						})}
 						class="h-full absolute right-0 top-0 flex flex-row items-center justify-center px-3 transition group"
 					>
 						<div
 							style="background: var(--c-{NetworkOptions[
-								farmManagers[selectedFarmIndex].network
+								NETWORKS[selectedNetworkIndex].network
 							].toLowerCase()}-20);"
 							class="absolute left-0 top-0 w-full h-full opacity-0 group-hover:opacity-100 transition"
 						/>
-						{#if stepOneCopied}
+						{#if steps.change_rewards.copied}
 							<IconTick />
 						{:else}
 							<IconCopy />
@@ -262,49 +238,51 @@
 					</button>
 				</p>
 			</div>
-			<!-- Step 2 -->
-			<div class="w-full flex flex-col mt-8">
-				<p class="font-bold text-xl px-2">Step 2</p>
+			<Divider />
+			<!-- Step Extend Time -->
+			<div class="w-full flex flex-col pb-1">
+				<p class="font-bold text-xl px-2">Step 4</p>
 				<p class="text-c-on-bg-75 px-2 mt-1">
-					Extend the time that the farm manager contract would run for by running the command below:
+					{steps.extend_time.descriptionFunc()}
 				</p>
 				<p
 					style="background: var(--c-{NetworkOptions[
-						farmManagers[selectedFarmIndex].network
+						NETWORKS[selectedNetworkIndex].network
 					].toLowerCase()}-10); color: var(--c-{NetworkOptions[
-						farmManagers[selectedFarmIndex].network
+						NETWORKS[selectedNetworkIndex].network
 					].toLowerCase()}); border-color: var(--c-{NetworkOptions[
-						farmManagers[selectedFarmIndex].network
+						NETWORKS[selectedNetworkIndex].network
 					].toLowerCase()}-20);"
-					class="border rounded-lg pl-4 pr-14 py-3 mt-4 text-sm font-medium text-c-primary break-all font-mono relative overflow-hidden"
+					class="border rounded-lg pl-4 pr-14 py-3 mt-4 text-sm font-medium text-c-primary 
+					break-all font-mono relative overflow-hidden"
 				>
-					{getStepTwoCommand(
-						NetworkOptions[farmManagers[selectedFarmIndex].network].toLowerCase(),
-						farmManagers[selectedFarmIndex].address,
-						timeInDays * dayInSeconds
-					)}
+					{steps.extend_time.commandTextFunc({
+						network: NetworkOptions[NETWORKS[selectedNetworkIndex].network].toLowerCase(),
+						address: NETWORKS[selectedNetworkIndex].farmManagerAddress,
+						timeInSeconds: timeInDays * dayInSeconds
+					})}
 					<button
 						on:click={() => {
-							stepTwoCopied = true;
-							if (stepTwoTimeout) clearTimeout(stepTwoTimeout);
+							steps.extend_time.copied = true;
+							if (steps.extend_time.timeout) clearTimeout(steps.extend_time.timeout);
 							setTimeout(() => {
-								stepTwoCopied = false;
+								steps.extend_time.copied = false;
 							}, copyDelay);
 						}}
-						use:copy={getStepTwoCommand(
-							NetworkOptions[farmManagers[selectedFarmIndex].network].toLowerCase(),
-							farmManagers[selectedFarmIndex].address,
-							timeInDays * dayInSeconds
-						)}
+						use:copy={steps.extend_time.commandTextFunc({
+							network: NetworkOptions[NETWORKS[selectedNetworkIndex].network].toLowerCase(),
+							address: NETWORKS[selectedNetworkIndex].farmManagerAddress,
+							timeInSeconds: timeInDays * dayInSeconds
+						})}
 						class="h-full absolute right-0 top-0 flex flex-row items-center justify-center px-3 transition group"
 					>
 						<div
 							style="background: var(--c-{NetworkOptions[
-								farmManagers[selectedFarmIndex].network
+								NETWORKS[selectedNetworkIndex].network
 							].toLowerCase()}-20);"
 							class="absolute left-0 top-0 w-full h-full opacity-0 group-hover:opacity-100 transition"
 						/>
-						{#if stepTwoCopied}
+						{#if steps.extend_time.copied}
 							<IconTick />
 						{:else}
 							<IconCopy />
@@ -315,10 +293,3 @@
 		</div>
 	</Transition>
 </div>
-
-<style>
-	input::placeholder {
-		color: var(--c-on-bg-40);
-		font-weight: 400;
-	}
-</style>

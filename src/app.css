@@ -50,6 +50,11 @@
 	--c-bsc-20: rgba(220, 164, 67, 0.2);
 }
 
+input::placeholder {
+	color: var(--c-on-bg-40);
+	font-weight: 400;
+}
+
 input:focus,
 input:hover,
 textarea:focus,
