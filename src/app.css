@@ -39,15 +39,15 @@
 	--c-shadow-soft: rgba(0, 0, 0, 0.2);
 	--c-danger: rgba(250, 110, 110, 1);
 	--c-danger-20: rgba(250, 110, 110, 0.2);
-	--c-polygon: rgba(211, 137, 255, 1);
-	--c-polygon-10: rgba(211, 137, 255, 0.1);
-	--c-polygon-20: rgba(211, 137, 255, 0.2);
+	--c-polygon: rgba(211, 137, 235, 1);
+	--c-polygon-10: rgba(211, 137, 235, 0.1);
+	--c-polygon-20: rgba(211, 137, 235, 0.2);
 	--c-fantom: rgba(127, 174, 255, 1);
 	--c-fantom-10: rgba(127, 174, 255, 0.1);
 	--c-fantom-20: rgba(127, 174, 255, 0.2);
-	--c-bsc: rgba(229, 164, 67, 1);
-	--c-bsc-10: rgba(229, 164, 67, 0.1);
-	--c-bsc-20: rgba(229, 164, 67, 0.2);
+	--c-bsc: rgba(210, 164, 67, 1);
+	--c-bsc-10: rgba(210, 164, 67, 0.1);
+	--c-bsc-20: rgba(210, 164, 67, 0.2);
 }
 
 input:focus,

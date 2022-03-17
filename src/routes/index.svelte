@@ -9,7 +9,7 @@
 	import { copy } from 'svelte-copy';
 
 	const dayInSeconds = 60 * 60 * 24;
-	const maxDecimalPoints = 9;
+	const maxDecimalPoints = 10;
 	let selectedFarmIndex = 0;
 	let amountToDistribute: number;
 	let timeInDays: number;
@@ -61,10 +61,14 @@
 		return Math.floor(value * multiplier) / multiplier;
 	}
 
-	function updateTextView(e) {
+	function updateTextView(e, type) {
 		console.log(e.target.value);
 		let num = getNumber(e.target.value);
-		amountToDistribute = num;
+		if (type == 'amountToDistribute') {
+			amountToDistribute = num;
+		} else if (type == 'timeInDays') {
+			timeInDays = num;
+		}
 		if (num == 0) {
 			e.target.value = '';
 		} else {
@@ -101,7 +105,7 @@
 					style="color: var(--c-{NetworkOptions[
 						farmManagers[selectedFarmIndex].network
 					].toLowerCase()})"
-					class="w-full bg-c-on-bg-05 font-semibold pl-4 pr-2.5 py-2.5 border border-transparent hover:border-c-on-bg-25 rounded-lg
+					class="text-lg w-full bg-c-on-bg-05 font-semibold pl-4 pr-2.5 py-2.5 border border-transparent hover:border-c-on-bg-25 rounded-lg
 						flex flex-row justify-between items-center transition-all duration-250 {open
 						? 'rounded-b-none shadow-dropdown-hover'
 						: 'shadow-dropdown'}"
@@ -145,7 +149,7 @@
 										style="color: var(--c-{NetworkOptions[
 											farmManagers[index].network
 										].toLowerCase()})"
-										class="w-full font-semibold px-4 py-2.5 hover:bg-c-on-bg-15 transition flex flex-row items-center"
+										class="w-full text-lg font-semibold px-4 py-2.5 hover:bg-c-on-bg-15 transition flex flex-row items-center"
 										value={index}
 									>
 										<p class="w-full overflow-hidden overflow-ellipsis whitespace-nowrap text-left">
@@ -168,23 +172,23 @@
 				type="text"
 				placeholder="Amount"
 				autocomplete="off"
-				on:keyup|preventDefault={updateTextView}
+				on:keyup|preventDefault={(e) => updateTextView(e, 'amountToDistribute')}
 				class="w-full text-lg font-semibold mt-2 bg-c-on-bg-05 border border-transparent rounded-lg 
-				px-4 py-2 hover:border-c-on-bg-25 focus:border-c-primary transition"
+				px-4 py-2.5 hover:border-c-on-bg-25 focus:border-c-on-bg-75 transition"
 			/>
 		</label>
 		<label for="timeInDays" class="w-full mt-5 hover:cursor-text">
 			<p class="px-2 text-c-on-bg-75 font-medium">
-				Time <span class="text-c-on-bg-40">(Days)</span>
+				Timeframe <span class="text-c-on-bg-40">(Days)</span>
 			</p>
 			<input
 				id="timeInDays"
-				type="number"
+				type="text"
 				placeholder="Days"
 				autocomplete="off"
-				bind:value={timeInDays}
+				on:keyup|preventDefault={(e) => updateTextView(e, 'timeInDays')}
 				class="w-full text-lg font-semibold mt-2 bg-c-on-bg-05 border border-transparent rounded-lg 
-				px-4 py-2 hover:border-c-on-bg-25 focus:border-c-primary transition"
+				px-4 py-2.5 hover:border-c-on-bg-25 focus:border-c-on-bg-75 transition"
 			/>
 		</label>
 	</form>
@@ -192,7 +196,9 @@
 		show={amountToDistribute !== null &&
 			!isNaN(amountToDistribute) &&
 			timeInDays !== null &&
-			!isNaN(timeInDays)}
+			!isNaN(timeInDays) &&
+			timeInDays !== 0 &&
+			amountToDistribute !== 0}
 		enter="transition-all duration-250 transform origin-top"
 		enterFrom="scale-y-95 opacity-90 -translate-y-2"
 		enterTo="scale-y-100 opacity-100 translate-y-0"
