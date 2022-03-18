@@ -5,6 +5,12 @@ export interface Network {
 	explorer: string;
 	farmManagerAddress: string;
 	wrapAddressBAN: string;
+	farms: Farm[];
+}
+
+export interface Farm {
+	pid: number;
+	pair: string;
 }
 
 export interface StepState {
