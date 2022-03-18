@@ -22,6 +22,7 @@
 	import { copy } from 'svelte-copy';
 	import { scale } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
+	import { tick } from 'svelte';
 
 	const DAY_IN_SECONDS = 60 * 60 * 24;
 	const MAX_DECIMAL_POINTS = 9;
@@ -32,13 +33,17 @@
 	let timeInDaysString: string = '28';
 	let timeInDays: number;
 	let allocPoint: number;
+	let renderFarms = true;
 
 	$: if (amountToDistributeString !== undefined)
 		amountToDistribute = getNumber(amountToDistributeString);
 	$: if (timeInDaysString !== undefined) timeInDays = getNumber(timeInDaysString);
 
-	function setSelectedNetwork(e) {
+	async function setSelectedNetwork(e) {
 		selectedNetworkIndex = e.detail;
+		renderFarms = false;
+		await tick();
+		renderFarms = true;
 	}
 </script>
 
@@ -386,116 +391,118 @@
 				<p class="text-c-on-bg-75 px-1.5 mt-1">
 					{steps.change_alloc_points.descriptionFunc()}
 				</p>
-				<TabGroup
-					class="mt-5 bg-c-on-bg-05 rounded-xl overflow-hidden"
-					let:selectedIndex
-					defaultIndex={0}
-				>
-					<TabList class="flex flex-row items-stretch bg-c-on-bg-05">
-						<div class="w-full flex flex-row justify-start items-stretch">
+				{#if renderFarms}
+					<TabGroup
+						class="mt-5 bg-c-on-bg-05 rounded-xl overflow-hidden"
+						let:selectedIndex
+						defaultIndex={0}
+					>
+						<TabList class="flex flex-row items-stretch bg-c-on-bg-05">
+							<div class="w-full flex flex-row justify-start items-stretch">
+								{#each NETWORKS[selectedNetworkIndex].farms as farm, farmIndex}
+									<Tab class="h-full flex flex-col px-2 pt-1 hover:bg-c-on-bg-10 transition">
+										<p
+											class="font-semibold h-full flex flex-row items-center px-3 py-2 rounded-md text-sm {selectedIndex ===
+											farmIndex
+												? 'text-c-on-bg'
+												: 'text-c-on-bg-40'} transition"
+										>
+											{farm.pair}
+										</p>
+										<div
+											class="w-full {selectedIndex === farmIndex
+												? 'bg-c-on-bg'
+												: 'bg-transparent'} h-2 rounded-t-full transition"
+										/>
+									</Tab>
+								{/each}
+							</div>
+						</TabList>
+						<TabPanels>
 							{#each NETWORKS[selectedNetworkIndex].farms as farm, farmIndex}
-								<Tab class="h-full flex flex-col px-2 pt-1 hover:bg-c-on-bg-10 transition">
+								<TabPanel class="p-4">
+									<label for="allocPoint" class="w-full md:flex-1 max-w-full hover:cursor-text">
+										<p class="px-1.5 text-c-on-bg-75 font-medium">Allocation Point</p>
+										<input
+											id="allocPoint"
+											type="number"
+											placeholder="Points"
+											autocomplete="off"
+											bind:value={allocPoint}
+											class="max-w-full w-48 font-semibold mt-1.5 bg-c-on-bg-05 border border-transparent rounded-lg 
+									px-4 py-2.5 hover:border-c-on-bg-25 focus:border-c-on-bg-75 transition"
+										/>
+									</label>
 									<p
-										class="font-semibold h-full flex flex-row items-center px-3 py-2 rounded-md text-sm {selectedIndex ===
-										farmIndex
-											? 'text-c-on-bg'
-											: 'text-c-on-bg-40'} transition"
+										style="background: var(--c-{NetworkOptions[
+											NETWORKS[selectedNetworkIndex].network
+										].toLowerCase()}-10); color: var(--c-{NetworkOptions[
+											NETWORKS[selectedNetworkIndex].network
+										].toLowerCase()}); border-color: var(--c-{NetworkOptions[
+											NETWORKS[selectedNetworkIndex].network
+										].toLowerCase()}-20);"
+										class="mt-5 border rounded-lg pl-4 pr-14 py-3 text-sm font-medium text-c-primary 
+									break-all font-mono relative overflow-hidden"
 									>
-										{farm.pair}
-									</p>
-									<div
-										class="w-full {selectedIndex === farmIndex
-											? 'bg-c-on-bg'
-											: 'bg-transparent'} h-2 rounded-t-full transition"
-									/>
-								</Tab>
-							{/each}
-						</div>
-					</TabList>
-					<TabPanels>
-						{#each NETWORKS[selectedNetworkIndex].farms as farm, farmIndex}
-							<TabPanel class="p-4">
-								<label for="allocPoint" class="w-full md:flex-1 max-w-full hover:cursor-text">
-									<p class="px-1.5 text-c-on-bg-75 font-medium">Allocation Point</p>
-									<input
-										id="allocPoint"
-										type="number"
-										placeholder="Points"
-										autocomplete="off"
-										bind:value={allocPoint}
-										class="max-w-full w-48 font-semibold mt-1.5 bg-c-on-bg-05 border border-transparent rounded-lg 
-										px-4 py-2.5 hover:border-c-on-bg-25 focus:border-c-on-bg-75 transition"
-									/>
-								</label>
-								<p
-									style="background: var(--c-{NetworkOptions[
-										NETWORKS[selectedNetworkIndex].network
-									].toLowerCase()}-10); color: var(--c-{NetworkOptions[
-										NETWORKS[selectedNetworkIndex].network
-									].toLowerCase()}); border-color: var(--c-{NetworkOptions[
-										NETWORKS[selectedNetworkIndex].network
-									].toLowerCase()}-20);"
-									class="mt-5 border rounded-lg pl-4 pr-14 py-3 text-sm font-medium text-c-primary 
-										break-all font-mono relative overflow-hidden"
-								>
-									{steps.change_alloc_points.commandTextFunc(
-										NetworkOptions[NETWORKS[selectedNetworkIndex].network].toLowerCase(),
-										NETWORKS[selectedNetworkIndex].farmManagerAddress,
-										NETWORKS[selectedNetworkIndex].farms[farmIndex].pid,
-										allocPoint === null || allocPoint === undefined ? 0 : allocPoint
-									)}
-									<button
-										on:click={() => {
-											steps.change_alloc_points.copied = true;
-											if (steps.change_alloc_points.timeout)
-												clearTimeout(steps.change_alloc_points.timeout);
-											steps.change_alloc_points.timeout = setTimeout(() => {
-												steps.change_alloc_points.copied = false;
-											}, COPY_DELAY);
-										}}
-										use:copy={steps.change_alloc_points.commandTextFunc(
+										{steps.change_alloc_points.commandTextFunc(
 											NetworkOptions[NETWORKS[selectedNetworkIndex].network].toLowerCase(),
 											NETWORKS[selectedNetworkIndex].farmManagerAddress,
 											NETWORKS[selectedNetworkIndex].farms[farmIndex].pid,
 											allocPoint === null || allocPoint === undefined ? 0 : allocPoint
 										)}
-										class="h-full absolute right-0 top-0 flex flex-row items-center justify-center px-3 transition group"
-									>
-										<div
-											style="background: var(--c-{NetworkOptions[
-												NETWORKS[selectedNetworkIndex].network
-											].toLowerCase()}-20);"
-											class="absolute left-0 top-0 w-full h-full opacity-0 group-hover:opacity-100 transition"
-										/>
-										{#if steps.change_alloc_points.copied}
+										<button
+											on:click={() => {
+												steps.change_alloc_points.copied = true;
+												if (steps.change_alloc_points.timeout)
+													clearTimeout(steps.change_alloc_points.timeout);
+												steps.change_alloc_points.timeout = setTimeout(() => {
+													steps.change_alloc_points.copied = false;
+												}, COPY_DELAY);
+											}}
+											use:copy={steps.change_alloc_points.commandTextFunc(
+												NetworkOptions[NETWORKS[selectedNetworkIndex].network].toLowerCase(),
+												NETWORKS[selectedNetworkIndex].farmManagerAddress,
+												NETWORKS[selectedNetworkIndex].farms[farmIndex].pid,
+												allocPoint === null || allocPoint === undefined ? 0 : allocPoint
+											)}
+											class="h-full absolute right-0 top-0 flex flex-row items-center justify-center px-3 transition group"
+										>
 											<div
-												in:scale|local={{
-													duration: 200,
-													start: 0.5,
-													easing: cubicOut,
-													opacity: 1
-												}}
-											>
-												<IconTick class="transform scale-125 h-6 w-6" />
-											</div>
-										{:else}
-											<div
-												in:scale|local={{
-													duration: 200,
-													start: 0.5,
-													easing: cubicOut,
-													opacity: 1
-												}}
-											>
-												<IconCopy />
-											</div>
-										{/if}
-									</button>
-								</p>
-							</TabPanel>
-						{/each}
-					</TabPanels>
-				</TabGroup>
+												style="background: var(--c-{NetworkOptions[
+													NETWORKS[selectedNetworkIndex].network
+												].toLowerCase()}-20);"
+												class="absolute left-0 top-0 w-full h-full opacity-0 group-hover:opacity-100 transition"
+											/>
+											{#if steps.change_alloc_points.copied}
+												<div
+													in:scale|local={{
+														duration: 200,
+														start: 0.5,
+														easing: cubicOut,
+														opacity: 1
+													}}
+												>
+													<IconTick class="transform scale-125 h-6 w-6" />
+												</div>
+											{:else}
+												<div
+													in:scale|local={{
+														duration: 200,
+														start: 0.5,
+														easing: cubicOut,
+														opacity: 1
+													}}
+												>
+													<IconCopy />
+												</div>
+											{/if}
+										</button>
+									</p>
+								</TabPanel>
+							{/each}
+						</TabPanels>
+					</TabGroup>
+				{/if}
 			</div>
 			<Divider />
 			<!-- Step: Change Rewards -->
