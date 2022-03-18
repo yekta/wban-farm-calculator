@@ -406,7 +406,7 @@
 									<div
 										class="w-full {selectedIndex === farmIndex
 											? 'bg-c-on-bg'
-											: 'bg-transparent'} h-2 rounded-t-full"
+											: 'bg-transparent'} h-2 rounded-t-full transition"
 									/>
 								</Tab>
 							{/each}
