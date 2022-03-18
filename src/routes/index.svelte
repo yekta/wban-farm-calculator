@@ -39,7 +39,7 @@
 <div
 	class="w-full min-h-screen flex flex-col items-center justify-start p-4 pb-8 md:py-6 md:pb-12 text-c-on-bg"
 >
-	<div class="w-full md:w-[44rem] flex flex-col gap-4 md:gap-6">
+	<div class="w-full md:w-[47rem] flex flex-col gap-4 md:gap-6">
 		<!-- REWARDS -->
 		<form
 			class="w-full max-w-full flex flex-col md:flex-row gap-5 md:gap-6 p-4 md:p-6 md:pt-5 items-center justify-center bg-c-on-bg-05 rounded-xl"

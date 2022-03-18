@@ -23,7 +23,7 @@ export let steps = {
 		copied: false,
 		timeout: undefined,
 		descriptionFunc: () =>
-			'Right before 3PM UTC, change the wBAN rewards given every second by the farm manager contract by running the command below:',
+			'Right before 3PM UTC, change the wBAN rewards the farm manager contract gives every second by executing the command below:',
 		commandTextFunc: ({
 			network,
 			address,
@@ -40,7 +40,7 @@ export let steps = {
 		copied: false,
 		timeout: undefined,
 		descriptionFunc: () =>
-			'Extend the time that the farm manager contract would run for by running the command below:',
+			'Extend the time the farm manager contract would run for by executing the command below:',
 		commandTextFunc: ({
 			network,
 			address,
