@@ -8,8 +8,8 @@ export const NETWORKS: Network[] = [
 		farmManagerAddress: '0xd91f84d4e2d9f4fa508c61356a6cb81a306e5287',
 		wrapAddressBAN: 'ban_3ftmwrap5qeirm53wndr6811tbnnraho587awkxn1xgrwfgry97cb4bouiwh',
 		farms: [
-			{ pid: 0, pair: 'wBAN-USDC • SpookySwap' },
-			{ pid: 1, pair: 'wBAN-FTM • SpookySwap' }
+			{ pid: 0, pair: 'wBAN-USDC • Spooky' },
+			{ pid: 1, pair: 'wBAN-FTM • Spooky' }
 		]
 	},
 	{
@@ -26,9 +26,9 @@ export const NETWORKS: Network[] = [
 		wrapAddressBAN: 'ban_1benisborxg1xdyiszp561t8dtu193cmirdue3gqanwubj8gm5ak87c5j8e7',
 		farms: [
 			{ pid: 0, pair: 'wBAN Staking' },
-			{ pid: 1, pair: 'wBAN-BNB • ApeSwap' },
-			{ pid: 2, pair: 'wBAN-BUSD • ApeSwap' },
-			{ pid: 3, pair: 'wBAN-BUSD • PancakeSwap' }
+			{ pid: 1, pair: 'wBAN-BNB • Ape' },
+			{ pid: 2, pair: 'wBAN-BUSD • Ape' },
+			{ pid: 3, pair: 'wBAN-BUSD • Pancake' }
 		]
 	}
 ];

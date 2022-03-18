@@ -26,20 +26,20 @@ export let steps = {
 			`Open the dapp repo, execute the command below to load the secrets in to the shell session:`,
 		commandTextFunc: (network: string) => `source ./env.sh ${network} production`
 	},
+	change_alloc_points: {
+		copied: false,
+		timeout: undefined,
+		descriptionFunc: () =>
+			`If you want to change allocation points for each individual farm, right before 3PM UTC execute the command for each farm you want to change:`,
+		commandTextFunc: (network: string, address: string, pid: number, allocPoint: number) =>
+			`npx hardhat --network ${network} benis:alloc-pool --benis ${address} ${pid} ${allocPoint}`
+	},
 	change_rewards: {
 		copied: false,
 		timeout: undefined,
 		descriptionFunc: () =>
-			'Right before 3PM UTC, change the wBAN rewards the farm manager contract gives every second by executing the command below:',
-		commandTextFunc: ({
-			network,
-			address,
-			banASecond
-		}: {
-			network: string;
-			address: string;
-			banASecond: number;
-		}) => {
+			'Right before 3PM UTC change the wBAN rewards the farm manager contract gives every second by executing the command below:',
+		commandTextFunc: (network: string, address: string, banASecond: number) => {
 			return `npx hardhat --network ${network} benis:change-rewards --benis ${address} --rewards ${banASecond}`;
 		}
 	},
@@ -48,15 +48,7 @@ export let steps = {
 		timeout: undefined,
 		descriptionFunc: () =>
 			'Extend the time the farm manager contract would run for by executing the command below:',
-		commandTextFunc: ({
-			network,
-			address,
-			timeInSeconds
-		}: {
-			network: string;
-			address: string;
-			timeInSeconds: number;
-		}) => {
+		commandTextFunc: (network: string, address: string, timeInSeconds: number) => {
 			return `npx hardhat --network ${network} benis:add-time --benis ${address} --time ${timeInSeconds}`;
 		}
 	}

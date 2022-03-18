@@ -87,6 +87,7 @@ module.exports = {
 				120: '120%'
 			},
 			boxShadow: {
+				tab: '0 0.4rem 0.8rem -0.1rem var(--c-shadow-harsh)',
 				card: '0rem 0rem 0rem -0.25rem var(--c-shadow-harsh)',
 				'card-hover': '0 1rem 2rem -0.25rem var(--c-shadow-harsh)',
 				'card-bottom': '0 0.3rem 0.6rem 0rem var(--c-shadow-soft)',
