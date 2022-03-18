@@ -19,6 +19,13 @@ export let steps = {
 		descriptionFunc: (amount: string, network: string, explorer: string, address: string) =>
 			`Wrap <span class="font-semibold" style="color: var(--c-${network});">${amount}</span> BAN and send the wBAN to <a target="_blank" href="${explorer}/address/${address}" class="hover:underline" style="color: var(--c-${network});">the farm manager contract</a>.`
 	},
+	load_secrets: {
+		copied: false,
+		timeout: undefined,
+		descriptionFunc: () =>
+			`Open the dapp repo, execute the command below to load the secrets in to the shell session:`,
+		commandTextFunc: (network: string) => `source ./env.sh ${network} production`
+	},
 	change_rewards: {
 		copied: false,
 		timeout: undefined,

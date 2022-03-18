@@ -320,9 +320,61 @@
 				</p>
 			</div>
 			<Divider />
-			<!-- Step: Change Rewards -->
+			<!-- Step: Load secrets -->
 			<div class="w-full flex flex-col pb-1 ">
 				<p class="font-bold text-xl px-1.5">Step 3</p>
+				<p class="text-c-on-bg-75 px-1.5 mt-1">
+					{steps.load_secrets.descriptionFunc()}
+				</p>
+				<p
+					style="background: var(--c-{NetworkOptions[
+						NETWORKS[selectedNetworkIndex].network
+					].toLowerCase()}-10); color: var(--c-{NetworkOptions[
+						NETWORKS[selectedNetworkIndex].network
+					].toLowerCase()}); border-color: var(--c-{NetworkOptions[
+						NETWORKS[selectedNetworkIndex].network
+					].toLowerCase()}-20);"
+					class="border rounded-lg pl-4 pr-14 py-3 mt-4 text-sm font-medium text-c-primary 
+						break-all font-mono relative overflow-hidden"
+				>
+					{steps.load_secrets.commandTextFunc(
+						NetworkOptions[NETWORKS[selectedNetworkIndex].network].toLowerCase()
+					)}
+					<button
+						on:click={() => {
+							steps.load_secrets.copied = true;
+							if (steps.load_secrets.timeout) clearTimeout(steps.load_secrets.timeout);
+							steps.load_secrets.timeout = setTimeout(() => {
+								steps.load_secrets.copied = false;
+							}, COPY_DELAY);
+						}}
+						use:copy={steps.load_secrets.commandTextFunc(
+							NetworkOptions[NETWORKS[selectedNetworkIndex].network].toLowerCase()
+						)}
+						class="h-full absolute right-0 top-0 flex flex-row items-center justify-center px-3 transition group"
+					>
+						<div
+							style="background: var(--c-{NetworkOptions[
+								NETWORKS[selectedNetworkIndex].network
+							].toLowerCase()}-20);"
+							class="absolute left-0 top-0 w-full h-full opacity-0 group-hover:opacity-100 transition"
+						/>
+						{#if steps.load_secrets.copied}
+							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 1 }}>
+								<IconTick class="transform scale-125 h-6 w-6" />
+							</div>
+						{:else}
+							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 1 }}>
+								<IconCopy />
+							</div>
+						{/if}
+					</button>
+				</p>
+			</div>
+			<Divider />
+			<!-- Step: Change Rewards -->
+			<div class="w-full flex flex-col pb-1 ">
+				<p class="font-bold text-xl px-1.5">Step 4</p>
 				<p class="text-c-on-bg-75 px-1.5 mt-1">
 					{steps.change_rewards.descriptionFunc()}
 				</p>
@@ -384,7 +436,7 @@
 			<Divider />
 			<!-- Step Extend Time -->
 			<div class="w-full flex flex-col pb-1">
-				<p class="font-bold text-xl px-1.5">Step 4</p>
+				<p class="font-bold text-xl px-1.5">Step 5</p>
 				<p class="text-c-on-bg-75 px-1.5 mt-1">
 					{steps.extend_time.descriptionFunc()}
 				</p>
