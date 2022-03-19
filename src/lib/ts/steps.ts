@@ -23,7 +23,7 @@ export let steps = {
 		copied: false,
 		timeout: undefined,
 		descriptionFunc: () =>
-			`Open the dapp repo, execute the command below to load the secrets in to the shell session:`,
+			`Open the dapp repo, execute the command below to load the secrets into the shell session:`,
 		commandTextFunc: (network: string) => `source ./env.sh ${network} production`
 	},
 	change_alloc_points: {
