@@ -23,6 +23,7 @@
 	import { scale } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
 	import { tick } from 'svelte';
+	import IconMorpher from '$lib/components/IconMorpher.svelte';
 
 	const DAY_IN_SECONDS = 60 * 60 * 24;
 	const MAX_DECIMAL_POINTS = 9;
@@ -222,15 +223,10 @@
 							].toLowerCase()}-20);"
 							class="absolute left-0 top-0 w-full h-full opacity-0 group-hover:opacity-100 transition"
 						/>
-						{#if steps.send_from_defi.defiFundAddressCopied}
-							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 1 }}>
-								<IconTick class="transform scale-125 h-6 w-6" />
-							</div>
-						{:else}
-							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 1 }}>
-								<IconCopy />
-							</div>
-						{/if}
+						<IconMorpher switched={steps.send_from_defi.defiFundAddressCopied}>
+							<IconCopy slot="0" />
+							<IconTick slot="1" class="transform scale-125 h-6 w-6" />
+						</IconMorpher>
 					</button>
 				</p>
 				<p class="px-1.5 text-c-on-bg-75 font-semibold mt-6">Wrap BAN Account</p>
@@ -264,15 +260,10 @@
 							].toLowerCase()}-20);"
 							class="absolute left-0 top-0 w-full h-full opacity-0 group-hover:opacity-100 transition"
 						/>
-						{#if steps.send_from_defi.wrapAddressCopied}
-							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 1 }}>
-								<IconTick class="transform scale-125 h-6 w-6" />
-							</div>
-						{:else}
-							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 1 }}>
-								<IconCopy />
-							</div>
-						{/if}
+						<IconMorpher switched={steps.send_from_defi.wrapAddressCopied}>
+							<IconCopy slot="0" />
+							<IconTick slot="1" class="transform scale-125 h-6 w-6" />
+						</IconMorpher>
 					</button>
 				</p>
 			</div>
@@ -318,15 +309,10 @@
 							].toLowerCase()}-20);"
 							class="absolute left-0 top-0 w-full h-full opacity-0 group-hover:opacity-100 transition"
 						/>
-						{#if steps.wrap_and_send.copied}
-							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 1 }}>
-								<IconTick class="transform scale-125 h-6 w-6" />
-							</div>
-						{:else}
-							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 1 }}>
-								<IconCopy />
-							</div>
-						{/if}
+						<IconMorpher switched={steps.wrap_and_send.copied}>
+							<IconCopy slot="0" />
+							<IconTick slot="1" class="transform scale-125 h-6 w-6" />
+						</IconMorpher>
 					</button>
 				</p>
 			</div>
@@ -370,15 +356,10 @@
 							].toLowerCase()}-20);"
 							class="absolute left-0 top-0 w-full h-full opacity-0 group-hover:opacity-100 transition"
 						/>
-						{#if steps.load_secrets.copied}
-							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 1 }}>
-								<IconTick class="transform scale-125 h-6 w-6" />
-							</div>
-						{:else}
-							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 1 }}>
-								<IconCopy />
-							</div>
-						{/if}
+						<IconMorpher switched={steps.load_secrets.copied}>
+							<IconCopy slot="0" />
+							<IconTick slot="1" class="transform scale-125 h-6 w-6" />
+						</IconMorpher>
 					</button>
 				</p>
 			</div>
@@ -473,29 +454,10 @@
 												].toLowerCase()}-20);"
 												class="absolute left-0 top-0 w-full h-full opacity-0 group-hover:opacity-100 transition"
 											/>
-											{#if steps.change_alloc_points.copied}
-												<div
-													in:scale|local={{
-														duration: 200,
-														start: 0.5,
-														easing: cubicOut,
-														opacity: 1
-													}}
-												>
-													<IconTick class="transform scale-125 h-6 w-6" />
-												</div>
-											{:else}
-												<div
-													in:scale|local={{
-														duration: 200,
-														start: 0.5,
-														easing: cubicOut,
-														opacity: 1
-													}}
-												>
-													<IconCopy />
-												</div>
-											{/if}
+											<IconMorpher switched={steps.change_alloc_points.copied}>
+												<IconCopy slot="0" />
+												<IconTick slot="1" class="transform scale-125 h-6 w-6" />
+											</IconMorpher>
 										</button>
 									</p>
 								</TabPanel>
@@ -548,15 +510,10 @@
 							].toLowerCase()}-20);"
 							class="absolute left-0 top-0 w-full h-full opacity-0 group-hover:opacity-100 transition"
 						/>
-						{#if steps.change_rewards.copied}
-							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 1 }}>
-								<IconTick class="transform scale-125 h-6 w-6" />
-							</div>
-						{:else}
-							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 1 }}>
-								<IconCopy />
-							</div>
-						{/if}
+						<IconMorpher switched={steps.change_rewards.copied}>
+							<IconCopy slot="0" />
+							<IconTick slot="1" class="transform scale-125 h-6 w-6" />
+						</IconMorpher>
 					</button>
 				</p>
 			</div>
@@ -604,15 +561,10 @@
 							].toLowerCase()}-20);"
 							class="absolute left-0 top-0 w-full h-full opacity-0 group-hover:opacity-100 transition"
 						/>
-						{#if steps.extend_time.copied}
-							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 1 }}>
-								<IconTick class="transform scale-125 h-6 w-6" />
-							</div>
-						{:else}
-							<div in:scale|local={{ duration: 200, start: 0.5, easing: cubicOut, opacity: 1 }}>
-								<IconCopy />
-							</div>
-						{/if}
+						<IconMorpher switched={steps.extend_time.copied}>
+							<IconCopy slot="0" />
+							<IconTick slot="1" class="transform scale-125 h-6 w-6" />
+						</IconMorpher>
 					</button>
 				</p>
 			</div>
