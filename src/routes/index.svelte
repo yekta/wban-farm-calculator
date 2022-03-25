@@ -229,7 +229,7 @@
 						</IconMorpher>
 					</button>
 				</p>
-				<p class="px-1.5 text-c-on-bg-75 font-semibold mt-6">Wrap BAN Account</p>
+				<p class="px-1.5 text-c-on-bg-75 font-semibold mt-6">Wrap Account (BAN)</p>
 				<p
 					style="background: var(--c-{NetworkOptions[
 						NETWORKS[selectedNetworkIndex].network
@@ -276,7 +276,8 @@
 						amountToDistribute.toLocaleString('en-US'),
 						NetworkOptions[NETWORKS[selectedNetworkIndex].network].toLowerCase(),
 						NETWORKS[selectedNetworkIndex].explorer,
-						NETWORKS[selectedNetworkIndex].farmManagerAddress
+						NETWORKS[selectedNetworkIndex].farmManagerAddress,
+						NETWORKS[selectedNetworkIndex].wrapAddressWBAN
 					)}
 				</p>
 				<p class="px-1.5 text-c-on-bg-75 font-semibold mt-6">Farm Manager Contract</p>
@@ -294,10 +295,11 @@
 					{NETWORKS[selectedNetworkIndex].farmManagerAddress}
 					<button
 						on:click={() => {
-							steps.wrap_and_send.copied = true;
-							if (steps.wrap_and_send.timeout) clearTimeout(steps.wrap_and_send.timeout);
-							steps.wrap_and_send.timeout = setTimeout(() => {
-								steps.wrap_and_send.copied = false;
+							steps.wrap_and_send.copied_manager = true;
+							if (steps.wrap_and_send.timeout_manager)
+								clearTimeout(steps.wrap_and_send.timeout_manager);
+							steps.wrap_and_send.timeout_manager = setTimeout(() => {
+								steps.wrap_and_send.copied_manager = false;
 							}, COPY_DELAY);
 						}}
 						use:copy={NETWORKS[selectedNetworkIndex].farmManagerAddress}
@@ -309,7 +311,43 @@
 							].toLowerCase()}-20);"
 							class="absolute left-0 top-0 w-full h-full opacity-0 group-hover:opacity-100 transition"
 						/>
-						<IconMorpher switched={steps.wrap_and_send.copied}>
+						<IconMorpher switched={steps.wrap_and_send.copied_manager}>
+							<IconCopy slot="0" />
+							<IconTick slot="1" class="transform scale-125 h-6 w-6" />
+						</IconMorpher>
+					</button>
+				</p>
+				<p class="px-1.5 text-c-on-bg-75 font-semibold mt-6">Wrap Account (wBAN)</p>
+				<p
+					style="background: var(--c-{NetworkOptions[
+						NETWORKS[selectedNetworkIndex].network
+					].toLowerCase()}-10); color: var(--c-{NetworkOptions[
+						NETWORKS[selectedNetworkIndex].network
+					].toLowerCase()}); border-color: var(--c-{NetworkOptions[
+						NETWORKS[selectedNetworkIndex].network
+					].toLowerCase()}-20);"
+					class="border rounded-lg pl-4 pr-14 py-3 mt-2 text-sm font-medium text-c-primary 
+					break-all font-mono relative overflow-hidden"
+				>
+					{NETWORKS[selectedNetworkIndex].wrapAddressWBAN}
+					<button
+						on:click={() => {
+							steps.wrap_and_send.copied_wrap = true;
+							if (steps.wrap_and_send.timeout_wrap) clearTimeout(steps.wrap_and_send.timeout_wrap);
+							steps.wrap_and_send.timeout_wrap = setTimeout(() => {
+								steps.wrap_and_send.copied_wrap = false;
+							}, COPY_DELAY);
+						}}
+						use:copy={NETWORKS[selectedNetworkIndex].wrapAddressWBAN}
+						class="h-full absolute right-0 top-0 flex flex-row items-center justify-center px-3 transition group"
+					>
+						<div
+							style="background: var(--c-{NetworkOptions[
+								NETWORKS[selectedNetworkIndex].network
+							].toLowerCase()}-20);"
+							class="absolute left-0 top-0 w-full h-full opacity-0 group-hover:opacity-100 transition"
+						/>
+						<IconMorpher switched={steps.wrap_and_send.copied_wrap}>
 							<IconCopy slot="0" />
 							<IconTick slot="1" class="transform scale-125 h-6 w-6" />
 						</IconMorpher>

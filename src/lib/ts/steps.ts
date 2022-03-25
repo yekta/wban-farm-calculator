@@ -11,13 +11,21 @@ export let steps = {
 			wrapAddress: string,
 			defiFundAddress: string
 		) =>
-			`Send <span class="font-semibold" style="color: var(--c-${network});">${amount}</span> BAN from <a target="_blank" href="${banExplorer}/explorer/account/${defiFundAddress}" class="hover:underline" style="color: var(--c-${network});">DeFi fund</a> to <a target="_blank" href="${banExplorer}/explorer/account/${wrapAddress}" class="hover:underline" style="color: var(--c-${network});">the wrap BAN account</a> linked to the bridge.`
+			`Send <span class="font-semibold" style="color: var(--c-${network});">${amount}</span> BAN from <a target="_blank" href="${banExplorer}/explorer/account/${defiFundAddress}" class="hover:underline" style="color: var(--c-${network});">DeFi fund</a> to <a target="_blank" href="${banExplorer}/explorer/account/${wrapAddress}" class="hover:underline" style="color: var(--c-${network});">the wrap account (BAN)</a> linked to the bridge.`
 	},
 	wrap_and_send: {
-		copied: false,
-		timeout: undefined,
-		descriptionFunc: (amount: string, network: string, explorer: string, address: string) =>
-			`Wrap <span class="font-semibold" style="color: var(--c-${network});">${amount}</span> BAN and send the wBAN to <a target="_blank" href="${explorer}/address/${address}" class="hover:underline" style="color: var(--c-${network});">the farm manager contract</a>.`
+		copied_manager: false,
+		copied_wrap: false,
+		timeout_manager: undefined,
+		timeout_wrap: undefined,
+		descriptionFunc: (
+			amount: string,
+			network: string,
+			explorer: string,
+			address: string,
+			wrapWbanAddress: string
+		) =>
+			`Wrap <span class="font-semibold" style="color: var(--c-${network});">${amount}</span> BAN using <a target="_blank" href="${explorer}/address/${wrapWbanAddress}" class="hover:underline" style="color: var(--c-${network});">the wrap account (wBAN)</a> and send the wBAN to <a target="_blank" href="${explorer}/address/${address}" class="hover:underline" style="color: var(--c-${network});">the farm manager contract</a>.`
 	},
 	load_secrets: {
 		copied: false,

@@ -5,6 +5,7 @@ export interface Network {
 	explorer: string;
 	farmManagerAddress: string;
 	wrapAddressBAN: string;
+	wrapAddressWBAN: string;
 	farms: Farm[];
 }
 
