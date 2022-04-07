@@ -40,7 +40,7 @@ export let steps = {
 		descriptionFunc: () =>
 			`If you want to change allocation points for each individual farm, right before 3PM UTC execute the command below for each farm you want to change:`,
 		commandTextFunc: (network: string, address: string, pid: number, allocPoint: number) =>
-			`npx hardhat --network ${network} benis:alloc-pool --benis ${address} ${pid} ${allocPoint}`
+			`npx hardhat --network ${network} benis:alloc-pool --benis ${address} --pid ${pid} --alloc ${allocPoint}`
 	},
 	change_rewards: {
 		copied: false,
