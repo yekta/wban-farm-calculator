@@ -1,5 +1,6 @@
 export enum NetworkOptions {
 	Polygon,
 	BSC,
-	Fantom
+	Fantom,
+	Ethereum
 }

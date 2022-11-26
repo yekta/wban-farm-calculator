@@ -33,6 +33,14 @@ export const NETWORKS: Network[] = [
 			{ pid: 2, pair: 'wBAN-BUSD • Ape' },
 			{ pid: 3, pair: 'wBAN-BUSD • Pancake' }
 		]
+	},
+	{
+		network: NetworkOptions.Ethereum,
+		explorer: 'https://etherscan.io',
+		farmManagerAddress: '0xD91f84D4E2d9f4fa508c61356A6CB81a306e5287',
+		wrapAddressBAN: 'ban_3ethwrap7kzguicmh3birwszzyg5giw93o7zkrqj7sxbcw8z83ihd3k4hps9',
+		wrapAddressWBAN: '0xD7eB548715FdC282d237Dd826b1A99d86bfec79c',
+		farms: [{ pid: 0, pair: 'wBAN-wETH • Uniswap' }]
 	}
 ];
 
