@@ -41,6 +41,14 @@ export const NETWORKS: Network[] = [
 		wrapAddressBAN: 'ban_3ethwrap7kzguicmh3birwszzyg5giw93o7zkrqj7sxbcw8z83ihd3k4hps9',
 		wrapAddressWBAN: '0xD7eB548715FdC282d237Dd826b1A99d86bfec79c',
 		farms: [{ pid: 0, pair: 'wBAN-wETH • Uniswap' }]
+	},
+	{
+		network: NetworkOptions.Arbitrum,
+		explorer: 'https://arbiscan.io',
+		farmManagerAddress: '0x8cd4DED2b49736B1a1Dbe18B9EB4BA6b6BF28227',
+		wrapAddressBAN: 'ban_1arbwrp3rk8us7m7nwox9xbqky59dmeez7k4k7hpettfcay357qx6615xx7w',
+		wrapAddressWBAN: '0xD7eB548715FdC282d237Dd826b1A99d86bfec79c',
+		farms: [{ pid: 0, pair: 'wBAN-wETH • Sushi' }]
 	}
 ];
 

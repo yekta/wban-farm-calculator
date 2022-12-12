@@ -51,6 +51,9 @@
 	--c-ethereum: rgba(100, 210, 150, 1);
 	--c-ethereum-10: rgba(100, 210, 150, 0.1);
 	--c-ethereum-20: rgba(100, 210, 150, 0.2);
+	--c-arbitrum: rgba(100, 150, 255, 1);
+	--c-arbitrum-10: rgba(100, 150, 255, 0.1);
+	--c-arbitrum-20: rgba(100, 150, 255, 0.2);
 }
 
 body {

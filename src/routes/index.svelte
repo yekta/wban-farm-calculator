@@ -20,8 +20,6 @@
 		TabPanel
 	} from '@rgossiaux/svelte-headlessui';
 	import { copy } from 'svelte-copy';
-	import { scale } from 'svelte/transition';
-	import { cubicOut } from 'svelte/easing';
 	import { tick } from 'svelte';
 	import IconMorpher from '$lib/components/IconMorpher.svelte';
 
@@ -54,7 +52,8 @@
 	<div class="w-full md:w-[47rem] flex flex-col gap-4 md:gap-6">
 		<!-- REWARDS -->
 		<form
-			class="w-full max-w-full flex flex-col md:flex-row gap-5 md:gap-6 p-4 md:p-6 md:pt-5 items-center justify-center bg-c-on-bg-05 rounded-xl"
+			class="w-full max-w-full flex flex-col md:flex-row gap-5 md:gap-6 p-4 md:p-6 md:pt-5 items-center 
+			justify-center bg-c-on-bg-05 rounded-xl relative z-20"
 			on:submit|preventDefault
 		>
 			<div class="w-full md:flex-1 max-w-full flex flex-col pb-1">
@@ -178,7 +177,7 @@
 			leave="transition-all duration-250 transform origin-top"
 			leaveFrom="scale-y-100 opacity-100 translate-y-0"
 			leaveTo="scale-y-95 opacity-0 -translate-y-6"
-			class="w-full max-w-full bg-c-on-bg-05 rounded-xl p-4 md:p-6"
+			class="w-full max-w-full bg-c-on-bg-05 rounded-xl p-4 md:p-6 relative z-10"
 		>
 			<!-- Step: Send to intermediate account -->
 			<div class="w-full flex flex-col pb-1">
