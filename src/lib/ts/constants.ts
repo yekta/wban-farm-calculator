@@ -31,7 +31,8 @@ export const NETWORKS: Network[] = [
 			{ pid: 0, pair: 'wBAN Staking' },
 			{ pid: 1, pair: 'wBAN-BNB • Ape' },
 			{ pid: 2, pair: 'wBAN-BUSD • Ape' },
-			{ pid: 3, pair: 'wBAN-BUSD • Pancake' }
+			{ pid: 3, pair: 'wBAN-BUSD • Pancake' },
+			{ pid: 4, pair: 'wBAN-USDC • Pancake' }
 		]
 	},
 	{
